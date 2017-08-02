@@ -1,0 +1,30 @@
+from django.conf.urls import url
+from .views import (
+                    WeekToWeekView,
+                    WeekToWeekCourseView,
+                    WeekToWeekSessionView,
+                    WeekToWeekSurveyView,
+                    AmbassadorReportsView,
+                    DirectoryView,
+                    TestGraphsView,
+                    AmbassadorAverageRatingsView,
+                    MissingSurveyReportView,
+                    IndividualAmbassadorReportView,
+                    SemesterReportView,
+                    download_report_excel,
+                    )
+urlpatterns = [
+        url(r'^$',DirectoryView.as_view(), name='directory'), 
+        url(r'week-by-week/$', WeekToWeekView.as_view(), name='week_to_week'),
+        url(r'week-by-week/course$', WeekToWeekCourseView.as_view(), name='week_to_week_course'),
+        url(r'week-by-week/sessions$', WeekToWeekSessionView.as_view(), name='week_to_week_session'),
+        url(r'week-by-week/average-ratings$', AmbassadorAverageRatingsView.as_view(), name='average_ratings'),
+        url(r'week-by-week/surveys$', WeekToWeekSurveyView.as_view(), name='week_to_week_survey'),
+        url(r'ambassador-list/$', AmbassadorReportsView.as_view(), name='ambassador_list'),
+        url(r'ambassador-list/(?P<pk>[0-9]+)/$', IndividualAmbassadorReportView.as_view(), name='individual_ambassador_stats'),
+        url(r'missing-survey-report/$', MissingSurveyReportView.as_view(),
+            name='missing_surveys'),
+        url(r'semester-report/$', SemesterReportView.as_view(),
+            name='semester_report'),
+        url(r'semester-report/download/$', download_report_excel, name='download_as_excel'),
+        ]

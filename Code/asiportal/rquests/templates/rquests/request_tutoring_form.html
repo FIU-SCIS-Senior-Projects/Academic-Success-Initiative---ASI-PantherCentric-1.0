@@ -1,0 +1,55 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h3>Course : {{ form.course }}</h3>
+<h3>Semester : {{ form.semester }}</h3>
+</div>
+{% endblock %}
+{% block content %}
+
+{% if has_too_many_sessions %}
+<div class="alert alert-danger">
+  Uh-oh! It seem's that you've surpassed the limit of requests you can make. In order to make sure that we can help as many students as possible, we have a limit of 4 hours worth of tutoring per student per week. If you would like to request additional tutoring, please send us an email at : asi.scis.fiu@gmail.com.
+  </div>
+  <a href="{% url 'home' %}"><button type="button" class="btn btn-primary">Back Home</button></a>
+{% else %}
+
+<!-- MODAL -->
+<div class="ASImodal-wrapper fadeIn" id="myModal">
+	<div class="ASImodal-content fadeIn">
+		<h1>Attention</h1>
+		<p>Your request may take a few days for us to process.
+		We will inform you when it has been processed.</p>
+
+		<button id="closeModalButton">I Understand</button>
+	</div>
+</div>
+<form action="" method="POST">
+ 
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit" value='submit' class="btn btn-primary">
+	Submit Request
+</button>
+</form>
+<div id="no-amb" style="display: none;" class="alert alert-info">There are currently no ambassadors availalble to tutor this course. Please check again later, or send an email to asi.scis.fiu@gmail.com with your desired course and times.
+</div>
+{% block jq %}
+<script>
+{% if not has_too_many_sessions %}
+
+$(document).ready(function()
+{
+  if($("#id_availability > option ").length <= 1)
+  {
+	$("#no-amb").css({display: "block"})
+  }
+}
+);
+{% endif %}
+</script>
+{% endblock %}
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>My Profile</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+{% if object is not None %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+    <th>Major </th>
+    <th>Sex </th>
+    <th>Phone Number </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ object.get_major_display }}</td>
+      <td>{{ object.get_sex_display }}</td>
+      <td>{{ object.phone_number }}</td>
+    </tr>
+  </tbody>
+</table>
+<a href="{% url 'user_profiles:update' pk=object.pk %}"><button class="btn btn-primary">Update Profile Information</button></a>
+{% else %}
+<h2>It looks like you haven't created your profile yet! Please visit  <a href="{% url 'user_profiles:create' %}">this link</a> to do so.</h2>
+{% endif %}
+{% endblock %}

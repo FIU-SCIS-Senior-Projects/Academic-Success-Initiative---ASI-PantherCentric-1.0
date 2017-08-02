@@ -1,0 +1,68 @@
+{% extends 'reports/base_view.html' %}
+
+{% block headline %}
+<div class="row text-center">
+	<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png"
+	 alt="ASI PantherCentric Logo">
+	<h2>Administrator Reports</h2>
+<h2>Missing Surveys</h2>
+</div>
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-xs-6 panel panel-dark reports-table">
+    <div class="panel-heading">Missing Tutee Surveys</div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead class="table-head">
+                    <tr>
+                        <th>Tutee</th>
+                        <th>Ambassador</th>
+                        <th>Session Date</th>
+                        <th>Course</th>
+                    </tr>
+                </thead>
+            <tbody>
+                {% for survey in tuts_survs %}
+                <tr>
+                <td>{{ survey.individual_session.session.tutee.get_full_name }}</td>
+            <td>{{ survey.individual_session.session.availability.ambassador.get_full_name }}</td>
+            <td> {{ survey.individual_session.session_date }} </td>
+            <td> {{ survey.individual_session.session.course }} </td>
+        </tr>
+    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-xs-6 panel panel-dark reports-table">
+    <div class="panel-heading">Missing Ambassador Surveys</div>
+    <div class="panel-body">
+    <table class="table table-bordered">
+        <thead class="table-head">
+            <tr>
+                <th>Tutee</th>
+                <th>Ambassador</th>
+                <th>Session Date</th>
+                <th>Course</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for survey in amb_survs %}
+    <tr>
+        <td>{{ survey.individual_session.session.tutee.get_full_name }}</td>
+        <td>{{ survey.individual_session.session.availability.ambassador.get_full_name }}</td>
+        <td> {{ survey.individual_session.session_date }} </td>
+        <td> {{ survey.individual_session.session.course }} </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

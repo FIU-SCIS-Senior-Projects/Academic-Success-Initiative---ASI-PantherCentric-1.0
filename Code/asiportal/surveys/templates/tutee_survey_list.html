@@ -1,0 +1,26 @@
+{% extends "_layouts/base.html" %}
+{% block title %}Tutee Surveys Submitted | {{ block.super }} {% endblock %}
+{% block headline %}<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>Surveys to  Submit</h1>
+</div>  {% endblock %}
+
+{% block content %}
+	<div>
+  		<div class="sm-col-6">
+    		<ul class="list-group">
+  				{% for survey in view.get_queryset%}
+					<a href={{survey.get_absolute_url}}>
+						<li class="list-group-item">
+							{{ survey.individual_session }}
+						</li>
+					</a>
+  					{% empty %}
+  					<li class="list-group-item">
+						You have no surveys to complete.
+					</li>
+				{% endfor %}
+  			</ul>
+		</div>
+	</div>
+{% endblock %}

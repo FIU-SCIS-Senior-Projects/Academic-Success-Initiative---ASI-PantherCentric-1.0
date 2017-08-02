@@ -1,0 +1,39 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h2>Timesheet Details</h2>
+<h2>Pay Period: {{ object.pay_period_begin }} - {{ object.pay_period_end }}</h2>
+{% endblock %}
+
+{% block content %}
+<table class="table table-custom">
+<thead>
+    <tr>
+        <th>Date</th>
+        <th>Session</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Total Time</th>
+        <th>Team Leader Approved?</th>
+    </tr>
+</thead>
+<tbody>
+    {% for entry in entries %}
+    <tr>
+        <td>{{ entry.session.session_date }}</td>
+        <td>{{ entry.session.session }}</td>
+        <td>{{ entry.session.session.start_time }}</td>
+        <td>{{ entry.session.session.end_time }}</td>
+        <td>{{ entry.total_time }}</td>
+        <td>{% if entry.tl_verified %} Yes {% else %} No {% endif %}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<div class="alert alert-info">Total Time Recorded: {{ total_time }}</span></div>
+<form method="POST" action="{% url 'timesheets:download_final' ambassador=request.user.username pk=object.pk %}">
+    {% csrf_token %}
+    <button class="button" type="submit">Download Timesheet As Excel Spreadsheet</button>
+    <button class="button" type="button"><a href="{% url 'timesheets:timesheet_list' %}">Go back</a></button>
+</form>
+{% endblock %}

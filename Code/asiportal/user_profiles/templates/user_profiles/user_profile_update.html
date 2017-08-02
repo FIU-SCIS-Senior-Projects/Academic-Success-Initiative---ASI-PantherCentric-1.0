@@ -1,0 +1,16 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>Update My Profile</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" action="submit">
+  </form>
+{% endblock %}

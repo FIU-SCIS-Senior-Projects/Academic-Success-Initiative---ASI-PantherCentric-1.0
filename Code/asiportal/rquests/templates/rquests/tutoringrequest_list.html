@@ -1,0 +1,59 @@
+{% extends '_layouts/base.html' %}
+
+{% block  title %}
+  {{ block.super }} | Tutoring Request List
+{% endblock %}
+{% block headline %}
+<h1>Tutoring Requests</h1>
+<div class="dropdown">
+	<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		Filter By
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+		<li class="dropdown-header">Filter by: </li>
+			<li> <a href="{% url 'requests:tutoring_request_list' %}">All Requests</a> </li>
+			<li> <a href="{% url 'requests:tutoring_request_list_filtered' order='A' %}">Unscheduled Requests</a> </li>
+			<li> <a href="{% url 'requests:tutoring_request_list_filtered' order='B' %}">Scheduled Requests</a> </li>
+			<li> <a href="{% url 'requests:tutoring_request_list_filtered' order='C' %}">Canceled Requests</a> </li>
+			<li> <a href="{% url 'requests:tutoring_request_list_filtered' order='D' %}">No Room Available Requests</a> </li>
+	</ul>
+</div>
+{% endblock %}
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/table.css" %}"></link>
+	<table class="custom-table">
+		<thead class="thead">
+			<tr>
+				<th>Update Link</th>
+				<th>Course</th>
+				<th>Semester</th>
+				<th>Ambassador</th>
+				<th>Tutee</th>
+				<th>Time</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for request in object_list %}
+			<tr>
+				<td><a href="{% url 'requests:update_request' pk=request.pk %}">Update Here</a></td>
+				<td>{{ request.course }}</td>
+				<td>{{ request.availability.semester }}</td>
+				<td>{{ request.availability.ambassador.get_full_name }}</td>
+				<td>{{ request.submitted_by.get_full_name }}</td>
+				<td>{{ request.availability.start_time|time:'h:i a' }} - {{ request.availability.end_time|time:'h:i a' }} on {{ request.availability.get_day_display }}</td>
+				<td>{{ request.get_status_display }}</td>
+			</tr>
+		{% empty %}
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<p>There are no requests at this moment</p>
+			</div>
+		</div>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

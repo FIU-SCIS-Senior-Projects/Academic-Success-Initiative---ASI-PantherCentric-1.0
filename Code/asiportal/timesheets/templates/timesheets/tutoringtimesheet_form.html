@@ -1,0 +1,247 @@
+{% extends '_layouts/base.html' %}
+{% load staticfiles %}
+
+{% block headline %}
+<h2>Editing timesheet for <br>{{timesheet.pay_period_begin}} to {{ timesheet.pay_period_end }}</h2>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg">
+<form method="POST">
+{% csrf_token %}
+{{ formset.management_form }}
+<table class="table" id="timesheet">
+    <thead>
+        <tr>
+            <th>Session</th>
+            <th>Total Hours</th>
+            <th>Remove Entry</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for form in formset %}
+        <tr id="{{form.prefix}}">
+          <td>{{ form.session }} {{ form.errors.session }}</td>
+          <td>{{ form.total_time }} {{ form.errors.total_time }}</td>
+          <td><button type="button" id="id_{{form.prefix}}-DELETE" name="{{form.prefix}}">X</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<button type="button" id="postem">
+    Save Timesheet Entries
+</button>
+<button id="addrow" type="button">
+    Add Another Entry
+</button>
+<a href="{% url 'timesheets:timesheet_list' %}">
+<button type="button">
+    Take Me Back!
+</button>
+</a>
+</form>
+    </div>
+    <div class="col-lg" id="saved">
+        <div class="panel panel-default">
+            <div class="panel-black">
+                Submitted Hours
+            </div>
+            <div class="panel panel-body">
+        <table class="table table-custom" id="entries">
+        <thead>
+            <tr>
+		    <th>Date</th>
+		    <th>Start Time</th>
+		    <th>End Time</th>
+                <th>Session</th>
+                <th>Total Hours</th>
+                <th>Team Leader Verified?</th>
+                <th>Remove?</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in entries %}
+        <tr id="entry-{{entry.id}}">
+            <td>{{entry.session.session_date}}</td>
+            <td>{{entry.session.session.start_time}}</td>
+            <td>{{entry.session.session.end_time}}</td>
+            <td>{{entry.session}}</td>
+            <td>{{entry.total_time}}</td>
+            <td>{% if entry.tl_verified %} Yes {% else %} No {% endif %}</td>
+            <td><button type="button" class="btn btn-outline">X</button></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block jq %}
+<script>
+var TOTAL_FORMS = $("#id_form-TOTAL_FORMS")
+var NEXT_FORM = parseInt(TOTAL_FORMS.val())
+var BASE_ROW = $("#timesheet>tbody>tr").last().clone();
+var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+var ws_path = ws_scheme + "://" + window.location.host + window.location.pathname + "stream/";
+var delete_path = ws_scheme + "://" + window.location.host + window.location.pathname + "delete/";
+
+$(function() {
+    var socket = new ReconnectingWebSocket(ws_path);
+    var deleteSocket = new ReconnectingWebSocket(delete_path)
+    socket.onmessage = function(message) {
+            var data = JSON.parse(message.data);
+
+            if(data.created)
+            {
+                var verified = data.tl_verified ? "Yes" : "No";
+		var row = "<tr id='entry-" + data.id + "'> <td>" + data.sdate + "</td><td>" + data.start_time + "</td><td>" + data.end_time + "</td><td>" + data.session + "</td><td>" + data.total_time + "</td><td>" + verified + "</td><td><button type='button' class='btn btn-outline'>X</button>";
+                if($("tr#entry-"+data.id).length > 0)
+                {
+                    $("tr#entry-"+data.id).remove();
+                }
+                $('table#entries>tbody').append(row);
+                $('select>option')
+                .removeAttr('selected')
+                    .filter('[value="' + data.id  + '"]')
+                    .attr('selected', true);
+                $('form>table>tbody>tr').each(function(i){
+                    if (i > 0)
+                        $(this).remove();
+                });
+
+                $('select>option').each(function()
+                    {
+                    if( $(this).val() == data.sess_id)
+                    {
+                        $(this).remove();
+                    }
+                    updateBaseRow();
+                    });
+            }
+            else if (data.errors){
+                console.log(data);
+                var alrt = data.message;
+                $('form').prepend(alrt);
+                reIndexForms();
+            }
+            else if(data.deleted){
+                var selection = $('table#entries>tbody>tr#entry-' + data.id);
+                $('#entries>tbody>tr#entry-' + data.id).remove();
+                var option = '<option value="' + data.sess_id + '">' + data.session + '</option>';
+                $('select').prepend(option)
+                updateBaseRow();
+            }
+        }
+$(document).on("click", '#entries>tbody>tr>td>button', function(){
+        // show a quick confirmation box
+        var popup = "<div class='ASImodal-wrapper fadeIn' id='myModal'> <div class = 'ASImodal-content fadeIn'> <h1>Attention</h1> <p>Are you sure you want to delete this time entry?'</p><button id='accept'>Yes</button> <button id='decline'>NO!!! TAKE ME BACK!!</button>"
+        var id = $(this).parent().parent().attr('id').split('entry-')[1]
+        $('div.pure-pusher').append(popup);
+        $('button#accept').on("click", function(){
+            $('#myModal').remove()
+            deleteSocket.send(JSON.stringify({'delete' : id}));
+        });
+        $('button#decline').on("click", function(){$('#myModal').remove()});
+
+    });
+
+    $(document).on("change", "form>table>tbody>tr>td>input[id$=total_time]", function()
+        {
+            var formid = $(this).prop('id').split('-total_time')[0];
+            var relatedval = $('select#' + formid + '-session' + '>option').filter(':selected').val();
+            if(relatedval == "")
+            {
+                $('tr#' + formid.split('id_')[1]).prop('style', 'box-shadow: 3px 2px 20px 2px rgba(255,0,0,.5);');
+                $('select#' + formid + '-session').change(function() {
+                    $('tr#' + formid.split('id_')[1]).prop('style', 'box-shadow: none;');
+                    });
+            }
+        });
+
+    $("#postem").click(function(){
+        socket.send(JSON.stringify({'formdata' : $('form').serialize()}));
+        TOTAL_FORMS.prop("value", 1);
+    });
+
+  $("#addrow").on("click", function(){
+    var clone = prepareClone();
+      $("#timesheet>tbody").append(clone);
+    updateTotalForms();
+    reFormat();
+    reIndexForms();
+
+
+      $("tr#" + $(clone).attr('id') + ">td>button[id$=-DELETE]").on(
+          "click", function() { 
+              delForms(this); 
+        });
+
+        function delForms(form){
+            var formNum = form.name.split('-DELETE')[0];
+            $("tr#"+formNum).remove();
+            decTotalForms();
+            reIndexForms();
+    }});
+
+});
+
+function prepareClone(){
+    var re = /form-[0-9]+/gi
+    var next_form_prefix = function() { return "form-" + NEXT_FORM; };
+    return "<tr id=" + next_form_prefix() +">" + BASE_ROW.html().replace(re, next_form_prefix()) + "</tr>";
+}
+
+function updateTotalForms(){
+TOTAL_FORMS.prop("value", function() { return ++NEXT_FORM; });
+}
+
+function decTotalForms(){
+  TOTAL_FORMS.prop("value", function() {
+      if(NEXT_FORM - 1 < 0)
+      {
+          NEXT_FORM = 0
+      }
+    else
+      {
+        return --NEXT_FORM;
+      }
+  });
+}
+
+function reIndexForms()
+{
+  $("tr[id^=form]").each(function(i) {
+    TOTAL_FORMS.prop("value", i+1);
+    var newform = 'form-' + i;
+    var new_id = this.id.replace(/form-[0-9]+/i, newform);
+    $(this).prop('id', new_id)
+    $(this).children().each(function() {
+        $(this).children().each(function() { 
+          var new_id = this.id.replace(/id_form-[0-9]+/i, 'id_form-' + i);
+          $(this).prop('id', new_id);
+          var new_name = this.name.replace(/form-[0-9]+/i, newform);
+          $(this).prop('name', new_name);
+        })
+      })
+    })
+}
+function reFormat()
+{
+    $("input").addClass("form-control");
+    $("select").addClass("form-control");
+    $("button").addClass("btn btn-outline-primary");
+}
+
+function updateBaseRow()
+{
+    BASE_ROW = $("#timesheet>tbody>tr").last().clone();
+}
+</script>
+{% endblock %}

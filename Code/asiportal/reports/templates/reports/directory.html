@@ -1,0 +1,41 @@
+{% extends 'reports/base_view.html' %}
+
+{% block headline %}
+<div class="row text-center">
+	<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png"
+	 alt="ASI PantherCentric Logo">
+	<h2>Administrator Reports</h2>
+</div>
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-dark">
+        <div class="panel-heading">Week To Week Statistics</div>
+        <div class="panel-body">
+  <ul class="list-group">
+    <li class="list-group-item"><a href="{% url 'reports:week_to_week' %}">Totals</a></li>
+    <li class="list-group-item"><a href="{% url 'reports:week_to_week_course' %}">Course Statistics</a></li>
+    <li class="list-group-item"><a href="{% url 'reports:week_to_week_session' %}">Session Statistics</a></li>
+    <li class="list-group-item"><a href="{% url 'reports:week_to_week_survey' %}">Survey Statistics</a></li>
+    </ul>
+    </div>
+</div>
+<div class="panel panel-dark">
+        <div class="panel-heading">Ambassador Statistics</div>
+        <div class="panel-body">
+  <ul class="list-group">
+    <li class="list-group-item"><a href="{% url 'reports:ambassador_list' %}">Individual Ambassador Statistics</a></li>
+    <li class="list-group-item"><a href="{% url 'reports:average_ratings' %}">Ambassador Average Ratings </a></li>
+    </ul>
+    </div>
+</div>
+<div class="panel panel-dark">
+        <div class="panel-heading">Missing Surveys</div>
+        <div class="panel-body">
+  <ul class="list-group">
+    <li class="list-group-item"><a href="{% url 'reports:missing_surveys' %}">Missing Surveys</a></li>
+    </ul>
+    </div>
+</div>
+{% endblock %}

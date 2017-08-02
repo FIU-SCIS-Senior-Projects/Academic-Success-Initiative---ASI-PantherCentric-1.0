@@ -1,0 +1,69 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<h1>Timesheets</h1>
+{% endblock %}
+
+{% block content %}
+<table class="custom-table">
+    <thead>
+        <th>Unapproved Timesheets</th>
+        <th>Download</th>
+    </thead>
+    <tbody>
+    {% for sheet in incomplete %}
+    <tr>
+        <td>
+            <a href="{% url 'timesheets:edit_timesheet' timesheet_pk=sheet.pk %}">{{ sheet }}</a>
+    </td>
+    <td>
+	    <a href="{% url 'timesheets:download_final' ambassador=request.user.username pk=sheet.pk %}">Download timsheet</a>
+    </td>
+    </tr>
+    {% empty %}
+    <tr>
+    <td>
+        No incomplete timesheets!
+    </td>
+    <td>
+    </td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% if can_approve %}
+<table class="custom-table">
+    <thead>
+        <th>Team Timesheets For Approval</th>
+    </thead>
+    <tbody>
+        <tr><td><a href="{% url 'timesheets:approve' %}">Approve Timesheets</a></td></tr>
+    </tbody>
+</table>
+{% endif %}
+
+<table class="custom-table">
+    <thead>
+        <th>Approved Timesheets</th>
+	<th>Download</th>
+    </thead>
+    <tbody>
+    {% for sheet in approved %}
+    <tr>
+        <td>
+            <a href="{% url 'timesheets:timesheet_detail' timesheet_pk=sheet.pk %}">{{ sheet }}</a>
+    </td>
+    <td>
+	    <a href="{% url 'timesheets:download_final' ambassador=request.user.username pk=sheet.pk %}">Download timsheet</a>
+    </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td>
+            No timesheets have been approved.
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<button type="button" class="btn"><a  href="{% url 'timesheets:new_timesheet' %}">Create a new timesheet</a></button>
+{% endblock %}

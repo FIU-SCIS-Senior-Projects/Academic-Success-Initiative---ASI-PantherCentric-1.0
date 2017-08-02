@@ -1,0 +1,22 @@
+{% extends '_layouts/base.html' %}
+{% block title %}
+{% endblock %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>Welcome, please choose from an option below</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<ul class="list-group">
+    <a href="{% url  'atrisk:student_video_list' %}"><li class="list-group-item">Watch Videos</li></a>
+{% if is_advisor %}
+    <a href="{% url 'atrisk:advisor_video_list' %}"><li class="list-group-item">Check Student Views</li></a>
+    <a href="{% url 'atrisk:create_alt_acct' %}"><li class="list-group-item">Create Student Account</li></a>
+</ul>
+{% endif %}
+
+{% endblock %}

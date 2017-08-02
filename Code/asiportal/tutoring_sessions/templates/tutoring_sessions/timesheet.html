@@ -1,0 +1,24 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>Choose Your Time Period</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'tutoring_sessions:download_sched' %}" method="post">
+    {% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit">
+</form>
+{% endblock %}
+
+{% block jq %}
+    <script>
+$(document).ready(function() {
+    $('.datepicker').datepicker();
+});
+    </script>
+{% endblock %}

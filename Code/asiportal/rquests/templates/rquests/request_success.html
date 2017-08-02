@@ -1,0 +1,11 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<h1>Request Successfully Received!</h1>
+{% endblock %}
+{% block content %}
+<p>Thank you for submitting your request! You will receive an automated message to confirm your request. You will receive another email once your session has bee nscheduled.</p>
+
+<p>It may take up to 3 days to fully process your request. So if you do not receive an email from us within that time frame, please send us an email at asi.scis.fiu@gmail.com</p>
+
+<a href="{% url 'home' %}">Go back home</a>
+{% endblock %}

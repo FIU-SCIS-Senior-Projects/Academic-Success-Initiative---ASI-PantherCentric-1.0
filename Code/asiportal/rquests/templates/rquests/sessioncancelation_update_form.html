@@ -1,0 +1,62 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h1>Update Cancelation Request</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Session Info</div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+          Ambassador : 
+        {{ object.session.availability.ambassador.get_full_name }}
+          </li>
+          <li class="list-group-item">
+          Tutee : 
+          {{ object.session.tutee.get_full_name }}
+          </li>
+          <li class="list-group-item">
+          Course :
+          {{ object.session.course }}
+          </li>
+          <li class="list-group-item">Room Number :
+          {{ object.session.room_number }}
+          </li>
+          <li class="list-group-item">
+          Time : 
+          {{ object.session.availability.start_time|time:'h:i a' }} -
+          {{ object.session.availability.end_time|time:'h:i a' }}
+          </li>
+          <li class="list-group-item">
+          Day :
+          {{ object.session.availability.get_day_display }}
+          </li>
+          <li class="list-group-item">
+          Reason :
+          {{ object.reason }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Update Request Form</div>
+      <div class="panel-body">
+        <form method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-primary" value="submit" type="submit">
+            Update Request
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

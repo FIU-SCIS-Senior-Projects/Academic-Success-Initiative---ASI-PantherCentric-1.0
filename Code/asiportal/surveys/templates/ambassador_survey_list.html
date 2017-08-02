@@ -1,0 +1,19 @@
+{% extends "_layouts/base.html" %}
+{% block title %}Ambassador Surveys Submitted | {{ block.super }} {% endblock %}
+{% block headline %} <h1> Surveys to Submit </h1> {% endblock %}
+
+{% block content %}
+	<div>
+  		<div class="sm-col-6">
+    		<ul class="list-group">
+  				{% for survey in view.get_queryset%}
+
+  					<a href={{survey.get_absolute_url}}><li class="list-group-item"> {{ survey.individual_session }} on {{ survey.individual_session.session_date }}</li></a>
+
+  					{% empty %}
+  					<li class="list-group-item">You have no surveys to complete.</li>
+				{% endfor %}
+  			</ul>
+		</div>
+	</div>
+{% endblock %}

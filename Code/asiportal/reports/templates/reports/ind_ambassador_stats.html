@@ -1,0 +1,38 @@
+{% extends 'reports/base_view.html' %}
+
+{% block headline %}
+<div class="row text-center">
+	<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png"
+	 alt="ASI PantherCentric Logo">
+	<h2>Administrator Reports</h2>
+<h2>Statistics for {{ object.get_full_name }}</h2>
+</div>
+{{ block.super }}
+{% endblock %}
+{% block statssection %}
+{% for week,v in weeks.items %}
+<div class="col-sm-6">
+  <div class="panel panel-dark reports-table">
+    <div class="panel-heading"> {{ week }} </div>
+    <div class="panel-body">
+      <table class="table table-bordered">
+        <thead class="table-head">
+          <tr>
+            <th>Metric</th>
+            <th>Stats</th>
+            </tr>
+          </thead>
+          <tbody>
+{% for k,x in v.items %}
+          <tr> 
+            <td>{{ k }}</td>
+            <td>{{ x }}</td>
+          </tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,21 @@
+<html>
+<body>
+Hello {{ user.get_full_name }},
+
+<p>We are emailing you to let you know that the Academic Success Initiative has reopened our services and will be providing tutoring for the Fall 2016 semester!
+
+<p>We currently are offering tutoring for the following courses:
+<ul>
+{% for course in courses %}
+  <li>{{ course }}</li>
+{% endfor %}
+</ul>
+</p>
+
+<p>You may register for tutoring by using our newly renovated <a href="https://asiportal.cis.fiu.edu/">ASI Portal</a>. If you registerd an account last semester, you may go ahead and login using the same credentials as before. Your login will be the first part of your FIU email ( everything before the @ symbol! ). If you've forgotten your password, please visit this <a href="https://asiportal.cis.fiu.edu{% url 'password_reset' %}">link</a></p>
+
+- Best Wishes,
+<br>
+The Academic Success Initiative
+</body>
+</html>

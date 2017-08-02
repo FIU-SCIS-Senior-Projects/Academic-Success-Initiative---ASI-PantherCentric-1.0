@@ -1,0 +1,10 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<h1>Requests Directory</h1>
+{% endblock %}
+{% block content %}
+  <ul class="list-group">
+  <li class="list-group-item"><a href="{% url 'requests:tutoring_request_list' %}">Tutoring Requests</a></li>
+  <li class="list-group-item"><a href="{% url 'requests:session_cancelation_requests' %} ">Session Cancelation Requests</a></li>
+  </ul>
+{% endblock %}

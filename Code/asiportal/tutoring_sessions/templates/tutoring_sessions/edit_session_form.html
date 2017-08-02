@@ -1,0 +1,41 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h1>Editing Session</h1>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Current Session Info</div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item">Ambassador : {{ object.availability.ambassador.get_full_name }}</li>
+          <li class="list-group-item">Tutee : {{ object.tutee.get_full_name }}</li> 
+          <li class="list-group-item">Course : {{ object.course }}</li>
+          <li class="list-group-item">Day : {{ object.availability.get_day_display }}</li>
+          <li class="list-group-item">Time : {{ object.availability.start_time|time:'H:i a' }} - 
+          {{ object.availability.end_time|time:'H:i a' }}</li>
+          <li class="list-group-item">Start Date : {{ object.start_date }}</li>
+          <li class="list-group-item">End Date : {{object.end_date }} </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">Edit Session Form</div>
+      <div class="panel-body">
+        <form method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button value="submit" type="submit" class="btn btn-primary">
+            Update Session
+            </button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

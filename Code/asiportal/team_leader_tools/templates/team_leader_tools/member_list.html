@@ -1,0 +1,23 @@
+{% extends '_layouts/base.html' %}
+  {% block headline %}
+  <h1>Team Member List</h1>
+  {% endblock %}
+{% block content %}
+<table class="table table-bordered">
+  <thead class="table-head">
+    <tr>
+      <th>Member</th>
+      <th>Link</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for member in object_list %}
+<tr>
+  <td>{{ member.get_full_name }}</td>
+  <td><a href="{% url 'team_leader_tools:team_member_detail' pk=member.pk %}">View Member Details</a></td>
+</tr>
+{% empty %}
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

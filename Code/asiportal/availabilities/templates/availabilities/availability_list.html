@@ -1,0 +1,41 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<h1>Current Availabilities</h1>
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/table.css" %}"></link>
+<table class="custom-table">
+<thead >
+    <tr class="table-head">
+        <th>Day</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Semester</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+</thead>
+<tbody>
+{% for obj in object_list %}
+<tr>
+    <td>{{ obj.get_day_display }}</td>
+    <td>{{ obj.start_time | time:'g:iA' }}</td>
+    <td>{{ obj.end_time | time:'g:iA' }}</td>
+    <td>{{ obj.semester }}</td>
+    <td><a href="{% url 'availabilities:edit' pk=obj.pk %}">X</a></td>
+    <td><a href="{% url 'availabilities:delete' pk=obj.pk %}">X</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<div style="text-align:center; margin-top: 1.5em; margin-bottom: 1.5em;">
+    <a href="{% url 'availabilities:submit' %}">
+        <button>
+            Add More Availabilities
+        </button>
+    </a>
+</div>
+{% endblock %}

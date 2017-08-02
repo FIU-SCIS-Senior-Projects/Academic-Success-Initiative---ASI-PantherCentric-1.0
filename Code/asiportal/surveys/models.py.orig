@@ -1,0 +1,30 @@
+from django.db import models
+from tutoring_sessions.models import Session
+
+class Survey(models.Model):
+    class Meta:
+        abstract=True
+    session = models.ForeignKey(
+              Session,
+              related_name="%(class)s_related",
+              )
+
+    rating_1 = models.IntegerField(default=1)
+    rating_2 = models.IntegerField(default=1)
+    rating_3 = models.IntegerField(default=1)
+
+    def __str__(self):
+        return 'Survey for %s' % self.session
+
+    def average_rating(self):
+        return ( self.rating_1 + self.rating_2 + self.rating_3) / 3
+
+class AmbassadorSurvey(Survey):
+    pass
+
+class TuteeSurvey(Survey):
+
+    rating_4 = models.IntegerField(default=1)
+    rating_5 = models.IntegerField(default=1)
+    rating_6 = models.IntegerField(default=1)
+    rating_7 = models.IntegerField(default=1)

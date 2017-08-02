@@ -1,0 +1,94 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h1>{{ object.get_full_name }}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">Current Sessions</div>
+    <div class="panel-body">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Tutee</th>
+      <th>Course</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Edit Session Link</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for session in sessions %}
+<tr>
+  <td>{{ session.tutee.get_full_name }}</td>
+  <td>{{ session.course }}</td>
+  <td>{{ session.availability.start_time|time:'H:i a'}}</td>
+  <td>{{ session.availability.end_time|time:'H:i a' }}</td>
+  <td>{{ session.start_date }}</td>
+  <td>{{ session.end_date }}</td>
+  <td><a href="{% url 'tutoring_sessions:edit_session' pk=session.pk %}">Edit Session</a></td>
+</tr>
+{% empty %}
+<div class="alert alert-info">No Scheduled Sesssions</div>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">Available Times</div>
+    <div class="panel-body">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Day</th>
+      <th>Semester</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for a in available_times %}
+<tr>
+  <td> {{ a.start_time|time:'H:i a' }} </td>
+  <td> {{ a.end_time|time:'H:i a' }} </td>
+  <td> {{ a.get_day_display }} </td>
+  <td> {{ a.semester }} </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">Survey Completions</div>
+    <div class="panel-body">
+{% for session, stats in survey_stats.items %}
+<div class="panel panel-default">
+<table class="table table-bordered">
+  <thead>
+      <div class="panel-heading">
+    {{ session }} 
+    </div>
+    <tr>
+        <th>Metric</th>
+        <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for k,x in stats.items %}
+      <tr>
+          <td>{{ k }}</td>
+          <td>{{ x }}</td>
+    </tr>
+      {% endfor %}
+</tbody>
+</table>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}

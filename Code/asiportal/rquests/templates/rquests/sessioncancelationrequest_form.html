@@ -1,0 +1,14 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h1>Create Session Cancelation Request</h1>
+{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button value="submit" type="submit" class="btn btn-outline-primary">
+    Submit Request
+  </button>
+</form>
+{% endblock %}

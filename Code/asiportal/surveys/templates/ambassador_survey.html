@@ -1,0 +1,18 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+	<h1>Ambassador Survey</h1>
+	<h2>Survey for {{ tutee_name }}</h2>
+{% endblock %}
+
+{% block content %}
+	<form method="POST">
+		{{ form.as_p }}
+		{% csrf_token %}
+		<div style="text-align:center;">
+			<button value="submit" type="submit">
+				Submit
+			</button>
+		</div>
+	</form>
+{% endblock %}

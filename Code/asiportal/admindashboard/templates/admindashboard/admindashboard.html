@@ -1,0 +1,98 @@
+{% extends '_layouts/base.html' %} {% block title %} {{ block.super }} | Home {% endblock %} {% block headline %}
+<div class="row text-center">
+	<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png"
+	 alt="ASI PantherCentric Logo">
+	<h2>Administrator Student List</h2>
+</div>
+{% endblock %} {% block content %}
+<!--So if logged in goes in this block-->
+{% if request.user.is_authenticated %}
+<div class="col-lg-offset-4 col-lg-4 text-center">
+	<h3>Welcome, <span>{{ user.get_full_name }}</span></h3>
+</div>
+<div class="col-lg-12 text-center">
+	<!--if your Myriam-->
+	{% if is_project_lead and not request.user.is_superuser %}
+	<!--<div class="home-links-wrapper-linkone card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="{% url 'timesheets:ambassador_list' %}">
+				<span>Approve Timesheets</span>
+			</a>
+		</div>-->
+	<h1>PROJECT LEAD AND NOT SUPER USER
+		<h1>
+			<!--else your any other group-->
+			{% else %}
+
+			<!--<h1>ELSE NOT (PROJECT LEAD AND NOT SUPER USER)<h1>-->
+			<h1>Students Enrolled in Current Semester</h1>
+
+			<table id="students" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Student Name</th>
+						<th>Student Email</th>
+						<th>Major</th>
+						<th>Sex</th>
+						<th>Courses being Tutored In</th>
+						<th>Reviewed</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for tutee, courses in tutees %}
+					<tr>
+						<td><a href="{% url 'admin_dashboard:student_detail' username=tutee.username %}"><button class="btn btn-link">{{tutee.get_full_name}}</button></a></td>
+						<td><button class="btn btn-link">{{tutee.email}}</button></td>
+						<td>{{tutee.profile.major}}</td>
+						<td>{{tutee.profile.sex}}</td>
+						<td>{% for course in courses %} {{course}} {% endfor %}</td>
+						<td>{% if tutee.review.reviewed %}<span class="glyphicon glyphicon-ok">{% endif %}</span>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<h6>Click on student email to email student</h6>
+			<!--<div class="home-links-wrapper-linkone card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="{% url 'courses:course_list'%}">
+				<span>Sign up for weekly tutoring sessions</span>
+			</a>
+		</div>-->
+
+			<!--more about what user group you are-->
+
+			{% if user.is_staff %}
+			<!--<div><h1>IF USER IS STAFF<h1></div>-->
+			<!--<div class="home-links-wrapper-linktwo card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+				<a href={% url 'surveys:ambassador_survey_list' %}>Fill out your surveys</span></a></div>-->
+			<!--other wise-->
+			{% else %}
+			<!--<div><h1>ELSE USER NOT STAFF<h1></div>-->
+			<!--<a href={% url 'surveys:tutee_survey_list' %}>Fill out your surveys</span></a></div>-->
+			{% endif %}
+			<!--<div class="home-links-wrapper-linkthree card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+				<a href="{% url 'tutoring_sessions:list' %}">
+					<span>Check out your schedule</span>
+				</a>
+			</div>-->
+			<!--<div class="home-links-wrapper-linkfour card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="http://asi.cs.fiu.edu">
+				<span>Go to the main ASI site</span>
+			</a>
+		</div>-->
+</div>
+{% endif %}
+<!--if not logged in you get this-->
+{% else %}
+<p>Please log in to continue.</p>
+{% endif %}
+<script type="text/javascript" class="init">
+	$(document).ready(function () {
+		$('#students').DataTable({
+			"columnDefs": [
+				{ "orderable": false, "targets": 4 }
+			]
+		});
+	});
+
+</script>
+
+{% endblock %}

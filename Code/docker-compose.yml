@@ -1,0 +1,38 @@
+version: '2'
+services:
+  db:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-psql
+    restart: always
+    ports:
+      - 5432:5432
+  app:
+    #build: .
+    image: asiportal:latest
+    restart: always
+    ports:
+      - 8000:8000
+    links:
+      - db
+      - redis
+    volumes:
+      - ./asiportal:/opt/asiportal
+    depends_on:
+      - db
+      - migration
+      - redis
+    command:
+      python /opt/asiportal/manage.py runserver 0.0.0.0:8000 --settings=asiapp.settings.docker
+  redis:
+    image: redis
+    restart: always
+  migration:
+    image: asiportal:latest
+    command: python /opt/asiportal/manage.py migrate --settings=asiapp.settings.docker
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis

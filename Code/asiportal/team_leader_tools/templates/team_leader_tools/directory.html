@@ -1,0 +1,13 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<h1>Team Leader Tools</h1>
+{% endblock %}
+
+{% block content %}
+<ul class="list-group">
+  <li class="list-group-item">
+  <a href="{% url 'team_leader_tools:team_member_list' %}">Team Member List</a></li>
+  <li class="list-group-item">
+  <a href="{% url 'requests:create' %}">Create Session Request</a></li>
+</ul>
+{% endblock %}

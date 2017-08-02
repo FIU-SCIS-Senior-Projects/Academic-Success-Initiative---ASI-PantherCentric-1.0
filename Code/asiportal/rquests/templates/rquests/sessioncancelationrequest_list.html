@@ -1,0 +1,34 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h1>Session Cancelation Requests</h1>
+{% endblock %}
+
+{% block content %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Update Link</th>
+      <th>Course</th>
+      <th>Ambassador</th>
+      <th>Tutee</th>
+      <th>Day</th>
+      <th>Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for obj in object_list %}
+  <tr>
+    <td><a href="{% url 'requests:session_cancelation_update' pk=obj.pk %}">Update Ticket #{{ obj.pk }}</a></td>
+    <td>{{ obj.session.course }}</td>
+    <td>{{obj.session.availability.ambassador.get_full_name}}</td>
+    <td>{{obj.session.tutee.get_full_name}}</td>
+    <td>{{obj.session.availability.get_day_display}}</td>
+    <td>{{obj.session.availability.start_time|time:'H:i a'}} - {{obj.availability.end_time|time:'H:i a'}}</td>
+    <td>{{obj.status}}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

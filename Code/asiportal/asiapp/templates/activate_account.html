@@ -1,0 +1,21 @@
+{% extends '_layouts/base.html' %}
+
+
+{% block headline %}
+  <h1>Activate Account</h1>
+{% endblock %}
+
+{% block content %}
+<ul>
+  <li>First Name : {{ object.user.first_name }}</li>
+  <li>Last Name : {{ object.user.last_name }}</li>
+  <li>Email : {{ object.user.email }}</li>
+  <li>Username : {{ object.user }}</li>
+</ul>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" value="submit" class="btn btn-primary">Activate Account</button>
+  <p>By clicking this button your account will be activated and you will be redirected to login.</p>
+</form>
+{% endblock %}

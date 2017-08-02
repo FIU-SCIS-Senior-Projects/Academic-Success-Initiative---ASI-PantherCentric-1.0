@@ -1,0 +1,9 @@
+Hello {{firstName}},
+
+After processing your request for:
+ {{ courseID }} from {{ start }} - {{ end }} 
+We were unable to schedule the session as we had no study rooms available during that time. 
+
+You may resubmit your request with another set of available hours; however, your  request will not be place ahead of others' and you will have to wait accordingly. Should you have any inquiries, you may contact us using the address: asi.scis.fiu@gmail.com.
+
+Thank you.

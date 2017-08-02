@@ -1,0 +1,16 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>Choose A Video To Watch</h1>
+</div>
+{% endblock %}
+{% block content %}
+<ul class="list-group">
+{% for obj in object_list %}
+<li class="list-group-item"><a href="{% url 'atrisk:video_view' urlcode=obj.url_code %}" %}>{{ obj.title }}</a>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}

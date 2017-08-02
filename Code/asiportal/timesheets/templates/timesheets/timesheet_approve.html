@@ -1,0 +1,114 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<h1>Approving Timesheets</h1>
+{% endblock %}
+
+{% block content %}
+<form class="form" method="POST">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table id="t1" class="table">
+        <thead >
+            <tr>
+                <th>Ambassador Survey Complete?</th>
+                <th>Tutee Survey Complete?</th>
+                <th>Canceled?</th>
+                <th>Student Absent?</th>
+                <th>Session</th>
+                <th>Total Hours</th>
+                <th>Comments</th>
+                <th>Approve</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                <tr id="{{ form.prefix }}" sessnum={{form.ent_id}}>
+                    <td> {{ form.amb_complete }} {{ form.id }} </td>
+                    <td> {{ form.tut_complete }} </td>
+                    <td>{{ form.session_canceled }}</td>
+                    <td>{{ form.tut_absent }}</td>
+                    <td> {{ form.session }} </td>
+                    <td> {{ form.hours }} </td>
+                    <td>{{ form.comments }}</td>
+                    <td> {{ form.tl_verified }} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+    <button id="approve" type="button" >Approve Selected Entries</button>
+    <button type="button"><a href="{% url 'timesheets:timesheet_list' %}">Back To Directory</a></button>
+</form>
+{% endblock %}
+{% block jq %}
+<script>
+var TOTAL_FORMS = $("#id_form-TOTAL_FORMS")
+var NTOTAL = TOTAL_FORMS.prop("value");
+var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+var ws_path = ws_scheme + "://" + window.location.host + window.location.pathname + "{{ request.user }}" + "/stream/";
+
+$(function()
+{
+    var table = $('form>table').DataTable();
+    var num_entries = $('#t1_length>label>select>option')
+        .filter(':selected')
+        .prop("value");
+    TOTAL_FORMS.prop("value", num_entries);
+    reIndexForms();
+    var socket = new ReconnectingWebSocket(ws_path);
+
+    $('#t1_length>label>select').change(function(){
+            updateTotalForms();
+            reIndexForms();
+        });
+
+    $('th').on("click", function(){
+            reIndexForms();
+        });
+
+    $("#t1_filter>label>input[type='search']").change(function() {
+        updateTotalForms();
+        reIndexForms();
+        });
+
+    socket.onmessage = function(message)
+    {
+        var data = JSON.parse(message.data);
+        if(data.verified)
+        {
+            var r = $('tr[sessnum='+data.id+']');
+            table.row(r).remove().draw();
+        }
+        updateTotalForms();
+        reIndexForms();
+    }
+
+    $("button#approve").on("click", function()
+        {
+        socket.send(JSON.stringify({'formdata' : $('form').serialize()}));
+        });
+});
+
+function updateTotalForms(num_entries)
+{
+    TOTAL_FORMS.prop("value", function() {
+        return $('#t1>tbody>tr').length;
+    });
+}
+function reIndexForms()
+{
+  $("tr[id^=form]").each(function(i) {
+    var newform = 'form-' + i;
+    var new_id = this.id.replace(/form-[0-9]+/i, newform);
+    $(this).prop('id', new_id)
+    $(this).children().each(function() {
+        $(this).children().each(function() { 
+          var new_id = this.id.replace(/id_form-[0-9]+/i, 'id_form-' + i);
+          $(this).prop('id', new_id);
+          var new_name = this.name.replace(/form-[0-9]+/i, newform);
+          $(this).prop('name', new_name);
+        })
+      })
+    })
+}
+</script>
+{% endblock %}

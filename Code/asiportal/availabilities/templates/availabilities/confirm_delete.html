@@ -1,0 +1,16 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h1>Delete Availability</h1>
+{% endblock %}
+
+{% block content %}
+
+<form method='POST'>
+    {% csrf_token %}
+    <p>Are you sure you want to delete <br>
+    {{ object }} ? </p>
+    <button value="submit" type="submit">Yes</button>
+    <button value="submit" formmethod='GET' formaction="{% url 'availabilities:list' %}"> No</button>
+</form>
+{% endblock %}

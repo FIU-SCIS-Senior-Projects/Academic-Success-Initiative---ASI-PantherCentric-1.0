@@ -1,0 +1,276 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}
+  {{ block.super }} | Home
+{% endblock %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h2>Administrator Student Surveys By Course</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- TUTEE MODAL -->
+<div class="modal fade" id="tuteeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header tutee-title">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Survey Title</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Questions and answers to go here -->
+        <table id=survey class="table table-bordered table-striped table-hover display">
+        	<thead>
+        		<tr><th>Tutee Questions</th><th>Response</th></tr>
+        	</thead>
+        	<tbody>
+        		<tr>
+        			<td>It is clear the ambassador knows and understands the subject matter of this course</td>
+        			<td class="t1">Response to Question 1</td>
+        		</tr>
+        		<tr>
+        			<td>The ambassador explains ideas and concepts clearly</td>
+        			<td class="t2">Response to Question 2</td>
+        		</tr>
+        		<tr>
+        			<td>The ambassador asks me questions and has me work sample problems</td>
+        			<td class="t3">Response to Question 3</td>
+        		</tr>
+        		<tr>
+        			<td>The ambassador listens to me and tries to understand my problems</td>
+        			<td class="t4">Response to Question 4</td>
+        		</tr>
+        		<tr>
+        			<td>The ambassador is friendly and courteous with me</td>
+        			<td class="t5">Response to Question 5</td>
+        		</tr>
+        		<tr>
+        			<td>The ambassador is trying to accommodate my learning style</td>
+        			<td class="t6">Response to Question 6</td>
+        		</tr>
+        		<tr>
+        			<td>The session is helpful and improved my understanding of the subject</td>
+        			<td class="t7">Response to Question 7</td>
+        		</tr>
+        		<tr>
+        			<td>Was your ambassador wearing an FIU/ASI related shirt?</td>
+        			<td class="t8">Response here</td>
+        		</tr>
+        		<tr>
+        			<td>Comments</td>
+        			<td class="t9">Response here</td>
+        		</tr>
+        	</tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AMBASSADOR MODAL -->
+<div class="modal fade" id="ambassadorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header ambassador-title">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Survey Title</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Questions and answers to go here -->
+        <table id=survey class="table table-bordered table-striped table-hover display">
+        	<thead>
+        		<tr><th>Ambassador Questions</th><th>Response</th></tr>
+        	</thead>
+        	<tbody>
+        		<tr>
+        			<td>Student Has Made Great Progress During Session</td>
+        			<td class="a1">Response to Question 1</td>
+        		</tr>
+        		<tr>
+        			<td>Student Shows Good Study Skills</td>
+        			<td class="a2">Response to Question 2</td>
+        		</tr>
+        		<tr>
+        			<td>Student Came Prepared for Session</td>
+        			<td class="a3">Response to Question 3</td>
+        		</tr>
+        		<tr>
+        			<td>Comments</td>
+        			<td class="a4">Response here</td>
+        		</tr>
+        		<tr>
+        			<td>Was the session canceled?</td>
+        			<td class="a5">Response here</td>
+        		</tr>
+        		<tr>
+        			<td>If the session was canceled why was it canceled</td>
+        			<td class="a6">Response here</td>
+        		</tr>
+        		<tr>
+        			<td>Was the student absent?</td>
+        			<td class="a7">Response here</td>
+        		</tr>
+        	</tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--So if logged in goes in this block-->
+  {% if request.user.is_authenticated %}
+  <div class="col-lg-12 text-center">
+			<!--if your Myriam-->
+        {% if is_project_lead and not request.user.is_superuser %}
+        <!--<div class="home-links-wrapper-linkone card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="{% url 'timesheets:ambassador_list' %}">
+				<span>Approve Timesheets</span>
+			</a>
+		</div>-->
+		<h1>PROJECT LEAD AND NOT SUPER USER<h1>
+		<!--else your any other group-->
+        {% else %}
+        {% for session, session_dict in sessions.items %}
+				
+					<!--<h1>ELSE NOT (PROJECT LEAD AND NOT SUPER USER)<h1>-->
+						<h1>Student Surveys By Course</h1>
+						
+						<table id="students" class="table table-bordered table-striped table-hover display">
+                <thead>
+                  <tr>
+								<th>Date of Survey</th><th>Tutee Average Rating</th><th>Ambassador Average Rating</th>								
+                </tr>
+                </thead>
+                <tbody>
+										{% for ambassador, tutee in session_dict.surveys %}
+												<tr>
+													<td>{{tutee.individual_session.session_date}}</td>
+													<td>
+														<button type="button" class="btn {% if ambassador.average_rating < 3 %}
+														btn-danger {% elif ambassador.average_rating < 4 %} btn-warning {% else %} btn-success {% endif %} btn-lg" data-id="{{ambassador.individual_session}}" data-a1={{ambassador.rating_1}} data-a2={{ambassador.rating_2}} data-a3={{ambassador.rating_3}} data-comments="{{ambassador.comments}}" data-cancelled={{ambassador.session_canceled|yesno|capfirst}} data-reason="{{ambassador.canceled_session_reason}}" data-absent={{ambassador.tutee_absent|yesno|capfirst}} data-toggle="modal" data-target="#ambassadorModal">
+														{{ambassador.average_rating|floatformat:1}}
+														</button>
+													</td>
+													<td>
+														<button type="button" class="btn {% if tutee.average_rating < 3 %}
+														btn-danger {% elif tutee.average_rating < 4 %} btn-warning {% else %} btn-success {% endif %} btn-lg" data-id="{{tutee.individual_session}}" data-t1={{tutee.rating_1}} data-t2={{tutee.rating_2}} data-t3={{tutee.rating_3}} data-t4={{tutee.rating_4}} data-t5={{tutee.rating_5}} data-t6={{tutee.rating_6}} data-t7={{tutee.rating_7}} data-shirt={{tutee.wearing_shirt|yesno|capfirst}} data-comments="{{tutee.comments}}" data-toggle="modal" data-target="#tuteeModal"
+														{% if ambassador.tutee_absent or ambassador.session_canceled %}
+														 disabled="disabled" {% endif %}>
+														{{tutee.average_rating|floatformat:1}}
+														</button>
+													</td>
+													</tr>
+										{% endfor %}
+                    </tbody>
+							</table>
+        
+        
+        <div class="col-lg-6">
+        {% if session_dict.overall_ambassador.errors %}
+        <span> {{ session_dict.overall_ambassador.message }} </span>
+        {% else %}
+          <table class="table table-bordered">
+              
+            <thead>
+            <tr>
+              <th>Ambassador Questions</th>
+              <th>Average Rating </th>
+            </tr>
+              </thead>
+        </tbody>
+          {% for key,value in session_dict.overall_ambassador %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ value|floatformat:1 }}</td>
+          {% endfor %}
+          <tr>
+            <td>Total Tutee Absences</td>
+            <td>{{ session_dict.total_absences.absences }} / {{ session_dict.total_absences.total_sessions }}</td>
+          </tr>
+          </tbody>
+          </table>
+        {% endif %}
+        </div>
+        <div class="col-lg-6">
+        {% if session_dict.overall_tutee.errors %}
+        <span> {{ session_dict.overall_tutee.message }} </span>
+        {% else %}
+          <table class="table table-bordered">
+              
+            <thead>
+            <tr>
+              <th>Tutee Questions</th>
+              <th>Average Rating</th>
+            </tr>
+              </thead>
+        </tbody>
+          {% for key,value in session_dict.overall_tutee %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ value|floatformat:1 }}</td>
+          {% endfor %}
+          </tbody>
+          </table>
+        {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
+		<!--if not logged in you get this-->
+  {% else %}
+     <p>Please log in to continue.</p>
+  {% endif %}
+  </div>
+  </div>
+<script type="text/javascript" class="init">
+  $(document).ready(function() {
+    $('#students').DataTable( {
+      "columnDefs": [
+        { "orderable": false, "targets": 4 }
+        ]
+    } );
+  } );
+</script>
+
+<script>
+        $('#tuteeModal').on('show.bs.modal', function(e) {
+            
+            var $modal = $(this),
+            	survey = e.relatedTarget.dataset;
+
+                $modal.find('.tutee-title').html(survey.id);
+                $modal.find('.t1').html(survey.t1);
+                $modal.find('.t2').html(survey.t2); 
+                $modal.find('.t3').html(survey.t3); 
+                $modal.find('.t4').html(survey.t4); 
+                $modal.find('.t5').html(survey.t5); 
+                $modal.find('.t6').html(survey.t6); 
+                $modal.find('.t7').html(survey.t7);
+                $modal.find('.t8').html(survey.shirt);
+                $modal.find('.t9').html(survey.comments);         
+        })
+        $('#ambassadorModal').on('show.bs.modal', function(e) {
+            
+            var $modal = $(this),
+            	survey = e.relatedTarget.dataset;
+
+                $modal.find('.ambassador-title').html(survey.id);
+                $modal.find('.a1').html(survey.a1);
+                $modal.find('.a2').html(survey.a2); 
+                $modal.find('.a3').html(survey.a3); 
+                $modal.find('.a4').html(survey.comments); 
+                $modal.find('.a5').html(survey.cancelled); 
+                $modal.find('.a6').html(survey.reason); 
+                $modal.find('.a7').html(survey.absent);
+        })
+</script>
+
+{% endblock %}

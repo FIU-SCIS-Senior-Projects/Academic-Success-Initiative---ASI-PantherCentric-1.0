@@ -1,0 +1,5 @@
+FROM postgres:latest
+ENV POSTGRES_DB asiportallocal
+ENV POSTGRES_PASSWORD test
+ENV POSTGRES_USER asiadmin
+ADD init.sql /docker-entrypoint-initdb.d/

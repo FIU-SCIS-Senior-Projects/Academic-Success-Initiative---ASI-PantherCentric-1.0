@@ -1,0 +1,20 @@
+Hello {{ tutee_name }},
+
+
+This is an automated response from the ASI Portal to let you know that your tutoring request for:
+
+ {{ course }} on {{ day }} from {{ start_time }} - {{ end_time }} with {{ ambassador }} for the {{ semester }} semester
+
+has been received.
+
+Please note that this session is NOT scheduled yet. Your request is being processed and may take up to 3 full business days to be completed.
+
+Once your request is fully processed you will receive another email with the full details of your scheduled session including the starting date of the first session.
+
+If you submitted multiple tutoring requests for the same course you will only receive one tutoring session per week, unless a prior arrangement was made.
+
+If you wish to cancel this request or have any questions please contact us by email at :
+asi.scis.fiu@gmail.com
+
+Thank You,
+- Academic Success Initiative

@@ -1,0 +1,18 @@
+{% extends "_layouts/base.html" %}
+
+{% block title %} Hour Limit {% endblock %}
+{% block headline %}
+    <h1>Working Hours a Week Limit</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="hour-limit-container">
+		<form action="" method="POST">
+			{{ form.as_p }}
+			{% csrf_token %}
+			<button type="submit" class="btn btn-outline-primary">
+				Submit
+			</button>
+		</form>
+	</div>
+{% endblock %}

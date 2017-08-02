@@ -1,0 +1,136 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<div class="row text-center">
+	<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png"
+	 alt="ASI PantherCentric Logo">
+	<h2>Administrator Reports</h2>
+<h2>Semester Report</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-12 text-center">
+<!-- Sessions statistics table -->
+<!-- http://localhost:8000/reports/semester-report/ -->
+<dl class="dl-horizontal">
+    <dt><h1 class="text-left">Sessions</h1></dt>
+    <dd style="padding-top:1em;" class="text-right"><button class="btn btn-asi" data-toggle="collapse" data-target="#sessions">View</button></dd>
+</dl>
+<div id="sessions" class="collapse">
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Actual Sessions</th>
+				<th>Scheduled Sessions</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<td>{{session_info.actual}}</td>
+				<td>{{session_info.scheduled}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<br>
+<!-- End Sessions Table -->
+
+<!-- Courses statistics table -->
+<dl class="dl-horizontal">
+    <dt><h1 class="text-left">Courses</h1></dt>
+    <dd style="padding-top:1em;" class="text-right"><button class="btn btn-asi" data-toggle="collapse" href="#collapseCourses">View</button></dd>
+</dl>
+<div class="collapse" id="collapseCourses">
+	<table class="table table-striped table-bordered">
+		<thead>
+				<tr>
+					<th>Courses</th>
+					<th>Number of Sessions</th>
+					<th>Percentage of Total</th>
+				</tr>
+		</thead>
+		{% for i in course_info %}
+		<tr><td>{{i.course_name}}</td><td>{{i.number_of_sessions}}</td><td>{{i.percentage_of_total}}%</td></tr>
+		{% endfor %}
+	</table>
+</div>
+<br>
+<!-- End Courses Table -->
+
+<!-- Tutee statistics table -->
+<dl class="dl-horizontal">
+<dt style="width: 50%"><h1 class="text-left">Tutees</h1></dt>
+    <dd style="padding-top:1em;" class="text-right"><button class="btn btn-asi" data-toggle="collapse" data-target="#tutees">View</button></dd>
+</dl>
+<div id ="tutees" class="collapse">
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Actual Sessions</td>
+				<td>Scheduled Sessions</td>
+				<td>Courses</td>
+				<td>Survey Completion</td>
+			</tr>
+		</thead>
+		<tbody>
+			{% for tutee in tutee_info %}
+			<tr>
+				<td>{{tutee.name}}</td>
+				<td>{{tutee.actual}}</td>
+				<td>{{tutee.scheduled}}</td>
+				<td>{{tutee.courses}}</td>
+				<td>{{tutee.survey|floatformat:"0"}}%</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<br>
+<!-- End Tutee Table -->
+
+<!-- Ambassador statistics table -->
+<dl class="dl-horizontal">
+<dt style="width: 50%"><h1 class="text-left">Ambassador</h1></dt>
+    <dd style="padding-top:1em;" class="text-right"><button class="btn btn-asi" data-toggle="collapse" data-target="#ambassador">View</button></dd>
+</dl>
+<div id="ambassador" class="collapse">
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Ambassadors</th>
+				<th>Sessions</th>
+				<th>Surveys</th>
+				<th>Ratings</th>
+				<th>Tutoring Hrs</th>
+				<th>Project Hrs</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for tutee in tutee_info %}
+			<tr>
+				<td>(Name)</td>
+				<td>(number, actual?)</td>
+				<td>(% done)</td>
+				<td>(rating)</td>
+				<td>(Total tutoring hrs)</td>
+				<td>(Total Project hrs)</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<!-- End Ambassador Table -->
+
+</div>
+<div class="text-center excel">
+<a href="{% url 'reports:download_as_excel' %}">
+    <button class="btn btn-asi">
+        Download as Excel SpreadSheet
+    </button>
+</a>
+</div>
+</div>
+{% endblock %}

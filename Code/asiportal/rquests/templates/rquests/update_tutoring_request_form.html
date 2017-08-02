@@ -1,0 +1,22 @@
+{% extends '_layouts/base.html' %}
+{% block  title %}
+  {{ block.super }} | Update Request
+{% endblock %}
+
+
+{% block headline %}
+<h2>Course : {{object.course }}</h2>
+<h2>Time : {{object.availability.start_time|time:'H:i a' }} - {{ object.availability.end_time|time:'H:i a'}}</h2>
+<h2>Day : {{ object.availability.get_day_display }}</h2>
+<h2>Ambassador : {{object.availability.ambassador.get_full_name }}</h2>
+<h2>Tutee : {{object.submitted_by.get_full_name }}</h2>
+<h2>Semester : {{object.availability.semester }}</h2>
+{% endblock %}
+
+{% block content %}
+  <form method='POST' id="update_ticket_form">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary" type="submit" form="update_ticket_form" value="Update">Update</button>
+  </form>
+{% endblock %}

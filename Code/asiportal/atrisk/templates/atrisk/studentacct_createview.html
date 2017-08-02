@@ -1,0 +1,15 @@
+{% extends '_layouts/base.html' %}
+{% block title %}
+{% endblock %}
+{% block headline %}
+<h1>Link New Student Account</h1>
+{% endblock %}
+{% block content %}
+<form method="POST">
+ {% csrf_token %}
+{{ form.as_p }}
+<button value="submit" type="submit">
+    Link Account
+</button>
+</form>
+{% endblock %}

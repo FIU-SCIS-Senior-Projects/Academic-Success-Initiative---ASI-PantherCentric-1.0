@@ -1,0 +1,24 @@
+{% extends '_layouts/base.html' %}
+
+
+{% block title %}
+{{ block.super }} | Create A New Account
+{% endblock %}
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h3>ASI PantherCentric Sign Up</h3>
+</div>
+{% endblock %}
+{% block content %}
+<div class="col-lg-offset-3 col-lg-6">
+<form method='POST'>
+{% csrf_token %}
+{{ form.as_p }}
+<div class="text-center">
+<button class="btn-asi" type="submit" value="Create Account">Create Account</button>
+</div>
+</form>
+</div>
+
+{% endblock %}

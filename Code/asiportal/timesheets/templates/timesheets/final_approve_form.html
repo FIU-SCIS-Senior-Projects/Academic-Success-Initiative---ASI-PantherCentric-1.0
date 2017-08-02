@@ -1,0 +1,52 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<h2>Timesheet For</h2>
+<h2>{{ object.ambassador.get_full_name }}</h2>
+<h3>Pay Period: {{ object.pay_period_begin }} - {{ object.pay_period_end }}</h3>
+{% endblock %}
+{% block content %}
+<table class="table table-custom">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Course</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Total Time</th>
+            <th>Team Leader Approved?</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sheet in related_sheets %}
+        <tr>
+            <td>{{ sheet.session.session_date }}</td>
+            <td>{{ sheet.session.session.course }}</td>
+            <td>{{ sheet.session.session.start_time }}</td>
+            <td>{{ sheet.session.session.end_time }}</td>
+            <td>{{ sheet.total_time }}</td>
+            <td>{% if sheet.tl_verified %} Yes {% else %} No {% endif %}</td>
+        </tr>
+        {% empty %}
+        <div class="alert alert-warning">
+            This user has no entries for this timesheet.
+        </div>
+        {% endfor %}
+    </tbody>
+</table> 
+<div class="well">
+    Total Hours : <strong>{{ total_time }}</strong>
+</div>
+<form method="POST">
+    {% csrf_token %}
+    {% comment %}
+
+    <div>
+        <label>Approve Timesheet?</label>
+    {{ form.final_approval }}
+    </div>
+    {% endcomment%}
+    <input type="submit" value="Finalize Timesheet">
+</form>
+{% endblock %}
+

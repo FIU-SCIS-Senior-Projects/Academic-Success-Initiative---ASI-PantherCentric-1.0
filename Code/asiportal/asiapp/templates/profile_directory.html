@@ -1,0 +1,54 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+  <h1>My Profile</h1>
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/table.css" %}"></link>
+<div class="panel-body">
+  <table class="custom-table">
+	<thead>
+		<tr>
+			<th style="font-size: 1.4rem;">Actions Available</th>
+		</tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td><a href="{% url 'user_profiles:detail' pk=request.user.pk %}">View My User Profile</a></td>
+      </tr>
+	{% if can_have_availability %}
+		<tr>
+			<td><a href="{% url 'availabilities:list' %}">Availablity Tools</a></td>
+		</tr>
+                <tr>
+                    <td><a href="{% url 'timesheets:timesheet_list' %}">Timesheets</a>
+                </tr>
+                <tr>
+                    <td><a href="{% url 'projects:project_timesheet_create' %}">Project Timesheets</a>
+                </tr>
+                <tr>
+                    <td><a href="{% url 'projects:project_list_view' %}">Project Approve Timesheets</a>
+                </tr>
+			{% endif %}
+			{% if can_cancel_sessions %}
+		<tr>
+			<td><a href="{% url 'requests:cancel_session_form' %}">Request Session Cancelation</a></td>
+		</tr>
+			{% endif %}
+			{% if can_add_time_restriction %}
+		<tr>
+			<td><a href="{% url 'restrictions:update_or_create_form' %}">Change Your Hour Limit</td>
+		</tr>
+			{% endif %}
+			<td><a href="{% url 'tutoring_sessions:list' %}">View Sessions</a></td>
+		</tr>
+{% comment %}
+	<li class="list-group-item"><a href="#">Submit Surveys</a></li>
+	<li class="list-group-item"><a href="#">Change Password</a></li>
+{% endcomment %}
+	</tbody>
+  </table>
+  <div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}
+  {{ block.super }} | Poll Generator
+{% endblock %}
+
+{% block headline %}
+<h1>Poll Generator</h1>
+{% endblock %}
+
+{% block content %}
+	{% if request.user.is_authenticated %}
+		{% for course_set in view.get_queryset %}
+			{% for course, entries in course_set %}
+			<div class="course-name-wrapper">
+				<h2>{{ course.name }}</h2>
+			</div>
+				<!-- Choose a time for {{ course.name }} -->
+				{% for entry in entries %}
+					<div class="course-time-wrapper">
+						<p>From {{entry.time_start}} to {{entry.time_end}}</p>
+					</div>
+					<br/>
+				{% endfor %}
+				<div class="form-wrapper">
+					<!-- This is fucked -->
+					<form class="form" action="" method="POST" style="display: none;">
+						{{ form.as_p }}
+						{% csrf_token %}
+						<input type="submit" class="button">
+					</form>
+					<button class="poll-button">+</button>
+				</div>
+			{% endfor %}
+		{% endfor %}
+  {% else %}
+     <p>Please log in to continue.</p>
+  {% endif %}
+
+{% endblock %}

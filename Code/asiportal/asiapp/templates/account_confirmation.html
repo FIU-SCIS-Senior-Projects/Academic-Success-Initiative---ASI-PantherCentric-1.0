@@ -1,0 +1,16 @@
+<html>
+<body>
+<p>Hello {{ user.get_full_name }},</p>
+
+<p>Thank you for registering to use the ASI Portal! With your newly created account you will be able to register for tutoring. However, before you are able to access those features you must first validate your account.</p>
+
+<p>The link to validate your account can be found by visiting <a href="https://asiportal.cis.fiu.edu{{ link }}">this link</a></p>
+
+<p>Once you have validated your account you may log in with the following username:
+<br />{{ user.username }}
+</p>
+
+<p>Thanks,
+<br>Academic Success Initiative</p>
+</body>
+</html>

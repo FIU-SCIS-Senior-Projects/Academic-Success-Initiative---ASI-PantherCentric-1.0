@@ -1,0 +1,65 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}
+  {{ block.super }} | Home
+{% endblock %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1 href="{% url 'home' %}">ASI PantherCentric Home</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+  {% if request.user.is_authenticated %}
+  <div class="home-wrapper">
+		<div class="col-lg-offset-4 col-lg-4">
+			<h2>Welcome <span id="home-user-wrapper">{{ user.get_full_name }}</span></h2>
+			</div>
+  </div>
+    <div class="home-links-wrapper">
+				{% if is_project_lead and not request.user.is_superuser %}
+				<div class="col-lg-offset-2 col-lg-8">
+        <div class="home-links-wrapper-linkone card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="{% url 'timesheets:ambassador_list' %}">
+			</a>
+		</div>
+        <div class="home-links-wrapper-linktwo card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="{% url 'admin_dashboard:home' %}">
+			</a>
+		</div>
+        <div class="home-links-wrapper-linkthree card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="{% url 'reports:semester_report' %}">
+			</a>
+		</div>
+		</div>
+        {% else %}
+        <div class="home-links-wrapper-linkone card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="{% url 'courses:course_list'%}">
+				<span>Sign up for weekly tutoring sessions</span>
+			</a>
+		</div>
+        <div class="home-links-wrapper-linktwo card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			{% if user.is_staff %}
+				<a href={% url 'surveys:ambassador_survey_list' %}>Fill out your surveys</span></a></div>
+			{% else %}
+				<a href={% url 'surveys:tutee_survey_list' %}>Fill out your surveys</span></a></div>
+			{% endif %}
+			<div class="home-links-wrapper-linkthree card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+				<a href="{% url 'tutoring_sessions:list' %}">
+					<span>Check out your schedule</span>
+				</a>
+			</div>
+        <div class="home-links-wrapper-linkfour card-1"onclick="location.href=$(this).children('a:first').attr('href');">
+			<a href="http://asi.cs.fiu.edu">
+				<span>Go to the main ASI site</span>
+			</a>
+		</div>
+    </div>
+    {% endif %}
+  {% else %}
+     <p>Please log in to continue.</p>
+  {% endif %}
+
+{% endblock %}

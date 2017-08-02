@@ -1,0 +1,140 @@
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+.pure-container{
+    background-color:#b3e6ff;
+}
+
+.pure-container, .pure-pusher, .pure-pusher-container{
+    height: auto;
+}
+
+.pure-pusher, .pure-pusher-container{
+    background: transparent;
+}
+
+.content-block{
+    padding-top: 10px;
+    background-color: #F8F8F8;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+
+.headline-block{
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding-top: 10px;
+    background-color: #F8F8F8;
+    border-radius: 5px;
+}
+
+footer{
+    padding-top: 10px;
+    background-color: #F8F8F8;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+
+.pure-toggle-label {
+    border-color: transparent;
+}
+
+.pure-toggle-label:hover {
+    border-color: transparent !important;
+}
+
+.pure-toggle-icon::before, .pure-toggle-icon::after, .pure-toggle-icon{
+    background: #ccc !important;
+}
+
+
+.notes{
+    background-color: #b3e6ff;
+    border-radius: 5px;
+}
+
+.student-profile{
+    padding-bottom: 25px;
+}
+
+.excel{
+    padding: 25px;
+}
+
+.btn-asi{
+    background-color: #43A8D3;
+    color: #fff;
+}
+
+.btn-asi:hover{
+    background-color: #49ADD7;
+    color: #fff;
+}
+
+.default-height{
+    height: 100px;
+}
+
+@media screen and (max-width: 767px){
+
+    .pure-toggle-label[data-toggle-label='right'] {
+    top: 25px;
+    right: 5px;
+    left: auto;
+}
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px){
+
+    .pure-toggle-label[data-toggle-label='right'] {
+    top: 25px;
+    right: 15px;
+    left: auto;
+}
+    
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px){
+
+     .pure-toggle-label[data-toggle-label='right'] {
+    top: 25px;
+    right: 25px;
+    left: auto;
+}
+    
+}
+
+
+@media screen and (min-width: 1200px){
+
+.pure-toggle-label[data-toggle-label='right'] {
+    right: 60px;
+    top: 30px;
+    left: auto;
+}
+
+.home-links-wrapper-linkone{
+    background-image: url('https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2017/07/time_stamp.png');
+    height: 375px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+}
+
+.home-links-wrapper-linktwo{
+    background-image:  url('https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2017/07/dashboard.png');
+    height: 375px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+}
+
+.home-links-wrapper-linkthree{
+    background-image:  url('https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2017/07/semester_report.png');
+    height: 375px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+}
+
+
+}

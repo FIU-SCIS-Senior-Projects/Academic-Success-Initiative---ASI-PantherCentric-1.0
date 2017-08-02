@@ -1,0 +1,41 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<!-- Single button -->
+<div class="dropdown">
+  <button class="btn btn-asi dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Choose Report Type
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li class="dropdown-header">Week To Week Statistics</li>
+    <li><a href="{% url 'reports:week_to_week' %}">Totals</a></li>
+    <li><a href="{% url 'reports:week_to_week_course' %}">Course Statistics</a></li>
+    <li><a href="{% url 'reports:week_to_week_session' %}">Session Statistics</a></li>
+    <li><a href="{% url 'reports:week_to_week_survey' %}">Survey Statistics</a></li>
+    <li class="divider"></li>
+    {% comment %}
+    <li class="dropdown-header">Overall Statistics</li>
+    <li><a href="{% url 'reports:week_to_week' %}">Totals</a></li>
+    <li><a href="#">Course Statistics</a></li>
+    <li><a href="#">Session Statistics</a></li>
+    <li class="divider"></li>
+    {% endcomment %}
+    <li class="dropdown-header">Ambassador Statistics</li>
+    <li><a href="{% url 'reports:ambassador_list' %}">Individual Ambassador Statistics</a></li>
+    <li><a href="{% url 'reports:average_ratings' %}">Ambassador Average Ratings </a></li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Missing Survey Reports</li>
+    <li><a href="{% url 'reports:missing_surveys' %}">Missing Surveys</a></li>
+  </ul>
+</div>
+<div class="back-btn-container">
+<h4><a href="{% url 'reports:directory' %}">Back to Directory</a></h4>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  {% block statssection %}
+  {% endblock %}
+</div>
+{% endblock %}

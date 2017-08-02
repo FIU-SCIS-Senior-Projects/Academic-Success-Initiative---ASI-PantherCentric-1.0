@@ -1,0 +1,19 @@
+Hello {{ firstName }},
+
+After processing your request for tutoring for {{ courseID }} we have successfully scheduled you for the following session(s):
+
+{{ day }}
+{{ startTime | time:"g:i A" }} - {{ endTime | time:"g:i A" }}
+
+The session(s) will be with {{ ambassadorName }} and will be held weekly from {{startDate}} - {{endDate}} every {{ day }}.
+
+Attendance to these sessions are MANDATORY and any cancelations must be made 24 hours in advance.
+Missing 2 sessions without prior notice to the ambassador is subject for having all future sessions canceled.
+
+All cancelations and questions should be sent to your ambassadors email which is : {{ ambassadorEmail }}.
+
+All tutoring is located in PG-6 Room 100.
+
+If you have any pending requests for tutoring for another course, you will receive another email with the result of that request. For any other general inquiries, you may contact us using the address: asi.scis.fiu@gmail.com.
+
+We hope the sessions will help with your success in the classroom.

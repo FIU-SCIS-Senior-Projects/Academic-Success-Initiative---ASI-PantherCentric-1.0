@@ -1,0 +1,89 @@
+@media screen and (max-width: 500px) {
+	.formset_row.dynamic-form {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		align-items: inherit;
+	}
+
+    .jumbotron h1 {
+        font-size: 1.5em;
+    }
+
+    .con-wrapper {
+        margin: 2em;
+    }
+
+    .table {
+        zoom: .5;
+    }
+    .table button {
+        position: relative;
+        margin-left: 5em;
+    }
+
+	form label {
+		font-size: .65em;
+	}
+	span.helptext {
+		font-size: .8em;
+		color: red;
+	}
+
+    .con-wrapper {
+        margin: 1em;
+    }
+
+	.form-wrapper {
+		margin-left: 4em;
+		margin-right: 4em;
+	}
+
+	.reports-table {
+		width: 100%;
+	}
+
+}
+
+@media screen and (min-width: 1200px) {
+	
+	.home-links-wrapper-linkone {
+		width: 300px;
+	}
+
+	.home-links-wrapper-linktwo {
+		width: 300px;
+	}
+
+	.home-links-wrapper-linkthree {
+		width: 300px;
+	}
+
+	.home-links-wrapper-linkfour {
+		width: 300px;
+	}
+}
+
+@media screen and (max-width: 321px) {
+	.formset_row.dynamic-form {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+	}
+	form label {
+		font-size: .5em;
+	}
+	span.helptext {
+		font-size: .6em;
+		color: red;
+	}
+	table.custom-table thead th, table.custom-table tbody td { 
+		padding: .8rem;
+		font-size: 8px !important;
+	}
+
+	.form-wrapper {
+		margin-left: 2em;
+		margin-right: 2em;
+	}
+}

@@ -1,0 +1,273 @@
+/******* GENERAL **********/
+ul.nav.navbar-nav li {
+	min-width: 100%;
+}
+
+.panel-one {
+	list-style: none;
+	line-height: 2;
+}
+
+.panel-two {
+	list-style: none;
+	line-height: 2;
+}
+
+* {
+	font-family: 'Poppins', sans-serif;
+}
+
+a {
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+a:hover{	
+	text-decoration: none;
+	shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	color: #919aa1;
+}
+
+/*****************************
+ *        BASE LAYOUT        *
+ ****************************/
+
+	/********  FORM STYLES *******/
+		form p {
+			text-align: initial;
+		}
+
+		form button {
+			color: #337ab7;
+			margin-top: 1em;
+		}
+
+	/****** PURE DRAWER *********/
+		.pure-pusher {
+			background-color: #edeff0;
+		}
+
+		.pure-pusher p {
+			font-size: 1.5em;
+		}
+
+		.pure-toggle-label {
+			zoom: .7;
+		}
+
+	/****** JUMBOTRON *********/
+		.jumbotron {
+			padding-left: 2em;
+			background-color: #272727;
+			color: white;
+		}
+
+	/****** CONTENT WRAPPER *******/
+		.con-wrapper {
+			display: flex;
+			padding-top: 2em;
+			padding-bottom: 4em;
+			margin: 3em;
+			background-color: white;
+			border-radius: 15px;
+		}
+
+	/****** CONTAINER  *******/
+	.container {
+		text-align:center;
+	}
+	
+
+/*****************************
+ *           HOME            *
+ ****************************/
+
+	/******** WRAPPER *******/
+		.wrapper h1 {
+			font-size: 1.5em;
+		}
+
+		.home-wrapper {
+			text-align: center;
+			font-size: 2em;
+		}
+
+		#home-user-wrapper {
+			font-size: .5em;
+			border-bottom: 1px solid #272727;
+		}
+
+
+	/***** HOME LINKS *******/
+		.home-links-wrapper {
+			display: flex;
+			-webkit-display: flex;
+			justify-content: center;
+			-webkit-flex-wrap: wrap;
+			flex-wrap: wrap;
+			text-align: center;
+			color: white;
+			margin-top: 2em;
+		}
+
+		.home-links-wrapper-linkone {
+			margin: 5%;
+			flex-grow: 1;
+			-webkit-flex-grow: 1;
+			padding: 3em;
+			width: 250px;
+			text-align: center;
+			border: solid 2px #ff4d54;
+			border-radius: 5px;
+			background-color: #ff4d54;
+		}
+
+		.home-links-wrapper-linktwo {
+			margin: 5%;
+			flex-grow: 1;
+			-webkit-flex-grow: 1;
+			width: 250px;
+			padding: 3em;
+			border: solid 2px #44d487;
+			border-radius: 5px;
+			background: #44d487;
+		}
+
+		.home-links-wrapper-linkthree {
+			margin: 5%;
+			flex-grow: 1;
+			-webkit-flex-grow: 1;
+			width: 250px;
+			margin-top: 2em;
+			padding: 3em;
+			border: solid 2px #4dacff;
+			border-radius: 5px;
+			background-color: #4dacff;
+		}
+
+		.home-links-wrapper-linkfour {
+			margin: 5%;
+			width: 250px;
+			flex-grow: 1;
+			-webkit-flex-grow: 1;
+			padding: 3em;
+			margin-top: 2em;
+			border: solid 2px #ffcc4d;
+			border-radius: 5px;
+			background: #ffcc4d;
+		}
+
+		.home-links-wrapper a{
+			color: white;
+			text-decoration: none;
+		}
+
+		.home-links-wrapper a:hover{
+			text-decoration: none;
+		}
+
+/******** POLL GENERATOR ********/
+	.course-name-wrapper {
+		text-align: center;	
+	}
+	
+	.course-time-wrapper {
+		text-align: center;	
+	}
+
+	.form-wrapper {
+		margin-left: 15em;
+		margin-right: 15em;
+		margin-bottom: 5em;
+	}
+
+	.poll-button {
+		float: right;
+		border-radius: 50%;
+		border-color: #272727;
+		background-color: white;
+		color: #272727;
+	}
+
+/****** PANELS *****/
+
+        .panel-black
+        {
+            background-color: #272727;
+            color : white;
+            padding: 10px 15px;
+            border-bottom: 1px solid transparent;
+            border-top-left-radius : 3px;
+            border-top-right-radius: 3px;
+        }
+
+/******* TABLES **********/
+	.row {
+		margin-left: 1em;
+		margin-right: 2em;
+	}
+
+	.table {
+		width: 85%;
+		margin: auto;
+	}
+
+	table.custom-table { 
+		width: 100%;
+		margin: 0 auto;
+		border-collapse: collapse;
+		font-family: Agenda-Light, sans-serif;
+		font-weight: 100; 
+		background: #333; color: #fff;
+		text-rendering: optimizeLegibility;
+		border-radius: 5px; 
+	}
+
+	table.custom-table thead th { font-weight: 600; }
+
+	table.custom-table thead th, table.custom-table tbody td { 
+		padding: .8rem;
+		font-size: 1.4rem;
+	}
+
+	table.custom-table tbody td { 
+		padding: .8rem; font-size: 1.4rem;
+		color: #444; background: #eee; 
+	}
+
+	table.custom-table tbody tr:not(:last-child) { 
+		border-top: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;  
+	}
+
+        #header-fixed
+        {
+            position: fixed;
+            top 0px; display:none;
+        }
+
+/******* ALERTS *******/
+	.alert {
+		width: 80%;
+		margin: auto;
+		margin-top: 1em;
+	}
+
+
+/******* NICE CARDS BRO *******/
+
+.card-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.card-1:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+/******* PROJECT TIME SHEET ******/
+.formset_row.dynamic-form {
+	display: flex;
+	flex-direction: row;
+    align-items: baseline;
+    flex-wrap: nowrap;
+}

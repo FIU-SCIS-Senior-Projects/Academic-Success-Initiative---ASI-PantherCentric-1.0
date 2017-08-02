@@ -1,0 +1,79 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>My Session List</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "css/table.css" %}"></link>
+<div class="panel-body" style="overflow-x: auto;">
+<table class="custom-table">
+  <thead>
+	<tr>
+	{% if request.user == object_list.0.tutee %}
+	  <th>Ambassador</th>
+	{% else %}
+	  <th>Tutee</th>
+	{% endif %}
+	  <th>Course</th>
+	  <th>Time</th>
+	  <th>Date</th>
+	  <th>Room</th>
+	  <th>Surveys</th>
+	{% if request.user != object_list.0.tutee %}
+	  <th>Survey Status</th>
+	{% endif %}
+	</tr>
+  </thead>
+  <tbody>
+  {% for obj in object_list %}
+
+  <tr>
+	{% if request.user == obj.tutee %}
+		<td>{{ obj.availability.ambassador.get_full_name }}</td>
+	{% else %}
+		<td>{{ obj.tutee.get_full_name }}</td>
+	{% endif %}
+	<td>{{ obj.course }}</td>
+	<td>{{ obj.availability.get_day_display  }}<br/><span style="font-size; .5em;">{{ obj.availability.start_time|time:'h:i a' }} - {{ obj.availability.end_time|time:'h:i a' }}</span></td>
+	<td>{{ obj.start_date }} - {{ obj.end_date }}</td>
+	<td>{{ obj.room_number }}</td>
+
+        {% if request.user == obj.tutee %}
+        <td><a href="{% url 'surveys:tutee_course_survey_list' session_pk=obj.pk %}">Link</a></td>
+
+        {% else %}
+        <td><a href="{% url 'surveys:ambassador_course_survey_list' session_pk=obj.pk %}">Link</a></td>
+        <td><a href="{% url 'surveys:survey_status_list' session_pk=obj.pk %}">Link</a></td>
+        {% endif %}
+
+  </tr>
+  {% empty %}
+  <div class="alert alert-info" id="quantum-dick">
+	  You currently have no schedueld sessions.
+  </div>
+  {% endfor %}
+  </tbody>
+</table>
+{% if request.user.is_staff %}
+<a href="{% url 'timesheets:timesheet_list' %}">
+    <button class="btn btn-primary">Create a timesheet</button></a>
+{% endif %}
+  </div>
+
+{% endblock %}
+
+{% block jq %}
+  <script>
+$(document).ready(function() {
+  if($("#quantum-dick").length != 0)
+{
+	$(".custom-table").remove();
+}
+});
+  </script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends '_layouts/base.html' %}
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>Available Courses</h1>
+</div>
+{% endblock %}
+{% block content %}
+<table class="table table-bordered">
+  <thead class="thead">
+	<tr class="table-head">
+		<th>Course</th>
+		<th>Semester</th>
+		<th>Link</th>
+	</tr>
+  </thead>
+<tbody>
+{% if is_summer %}
+{% for course in in_a %}
+<tr>
+  <td>{{course}}</td>
+  <td>{{summer_a}}</td>
+    <td><a href="{% url 'requests:request_tutoring' course=course.slug semester=summer_a.slug %}">Click here</a></td>
+</tr>
+{% endfor %}
+{% for course in in_b %}
+<tr>
+  <td>{{course}}</td>
+  <td>{{summer_b}}</td>
+    <td><a href="{% url 'requests:request_tutoring' course=course.slug semester=summer_b.slug %}">Click here</a></td>
+</tr>
+{% endfor %}
+{% for course in in_c %}
+<tr>
+  <td>{{course}}</td>
+  <td>{{summer_c}}</td>
+    <td><a href="{% url 'requests:request_tutoring' course=course.slug semester=summer_c.slug %}">Click here</a></td>
+</tr>
+{% endfor %}
+{% else %}
+{% for semester in semesters %}
+{% for course in object_list %}
+ <tr>
+    <td>{{course}}</td>
+    <td>{{semester}}</td>
+    <td><a href="{% url 'requests:request_tutoring' course=course.slug semester=semester.slug %}">Click here</a></td>
+  </tr>
+{% endfor %}
+  {% empty %}
+  <div class="alert alert-danger">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> There are currently no tutors available for any courses.
+    </div>
+{% endfor %}
+{% endif %}
+  </tbody>
+</table>
+<div class="alert alert-info">
+	{% comment %}
+<div class="hw-lab-alert">
+	<div class="text-wrapper">
+		<p>Tutoring for the following courses can be found in the hardware lab at the times below </p>
+		<span>Monday - Friday </br>10 AM - 9 PM </br> </span>
+		<span></br>Saturday </br> 10 AM - 4 PM </br></br></span>
+		</span>
+		<div class="hw-lab-classes">
+			<span>CGS 3767</br></span> 
+			<span>CGS 4854</br></span>
+		</div>
+	</div>
+</div>
+</br>
+{% endcomment %}
+Cant find the course you want tutoring for? Send us an email at asi.scis.fiu@gmail.com with the course you're looking for and we'll get back to you within 2-3 days. 
+</div>
+{% endblock %}

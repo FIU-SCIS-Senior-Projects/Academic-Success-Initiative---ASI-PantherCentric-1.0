@@ -1,0 +1,38 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+<div class="row text-center">
+<img class="center-block img-responsive default-height" src="https://webs.cs.fiu.edu/asi2/wp-content/uploads/sites/15/2016/05/ASI-Logo.png" alt="ASI PantherCentric Logo">
+<h1>Administrator's Ambassador Timesheet</h1>
+<h2>Choose A Timesheet To Approve</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+<table class="table table-custom">
+    <thead>
+        <tr>
+            <th>Pay Period</th>
+            <th>Approved?</th>
+            <th>Edit</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in object_list %}
+        <tr>
+            <td>{{ obj.pay_period_begin }} - {{ obj.pay_period_end }}</td>
+            <td>{% if obj.final_approval %} Yes {% else %} No {% endif %}</td>
+            <td><a href="{% url 'timesheets:final_approve' ambassador=ambassador pk=obj.pk %}">Approve Timesheet</a></td>
+            <td><form method='POST' action="{% url 'timesheets:download_final' ambassador=ambassador pk=obj.pk %}">{% csrf_token %}<input type="submit" val="Download as Excel spreadsheet"></form></a></td>
+        </tr>
+        {% empty %}
+        <div class="alert alert-warning">
+        This ambassador has no timesheets.
+        </div>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'timesheets:ambassador_list' %}"><button class="btn btn-outline">Back to Ambassador directory</button></a>
+
+{% endblock %}

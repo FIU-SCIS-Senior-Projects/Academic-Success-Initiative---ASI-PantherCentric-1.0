@@ -1,0 +1,21 @@
+<html>
+<body>
+Hello {{ user.get_full_name }},
+
+<p>We are emailing you to remind you of your tutoring session(s) for today.
+
+<p>Tutoring Session(s) for {{ date }}:
+<ul>
+{% for session in sessions %}
+  <li>{{ session.course }} with {{ session.ambassador.get_full_name }} at {{ session.start_time }} in PG6-{{ session.room_number }}</li>
+{% endfor %}
+</ul>
+</p>
+
+<p>Remember to be on time and bring any items that will facilitate your learning. Should you be unable to attend any of the scheduled sessions, please notify your Ambassador as soon as possible. Upon completion of your tutoring session(s) please fill out the respective surveys so that you can help us improve our service.</p>
+
+- Best Wishes,
+<br>
+The Academic Success Initiative
+</body>
+</html>

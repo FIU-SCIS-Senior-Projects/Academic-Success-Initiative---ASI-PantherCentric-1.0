@@ -1,0 +1,53 @@
+from django.conf.urls import url
+from .views import (
+            AmbassadorSurveyView,
+            AmbassadorListSurveysView,
+            TuteeListSurveysView,
+            TuteeSurveyView,
+            SuccessView,
+            TuteeListCourseSurveysView,
+            AmbassadorListCourseSurveysView,
+            SurveyStatusListView,
+            )
+urlpatterns = [
+        url(
+            r'ambassador-survey/(?P<slug>[-\w\d]+)$',
+            AmbassadorSurveyView.as_view(),
+            name='ambassador_survey'
+        ),
+        url(
+            r'tutee-survey/(?P<slug>[-\w\d]+)$',
+            TuteeSurveyView.as_view(),
+            name='tutee_survey'
+        ),
+        url(
+            r'ambassador-survey-list/$',
+            AmbassadorListSurveysView.as_view(),
+            name='ambassador_survey_list'
+        ),
+        url(
+            r'ambassador-survey-list/(?P<session_pk>\d+)$',
+            AmbassadorListCourseSurveysView.as_view(),
+            name='ambassador_course_survey_list'
+        ),
+        url(
+            r'tutee-survey-list/$',
+            TuteeListSurveysView.as_view(),
+            name='tutee_survey_list'
+        ),
+        url(
+            r'tutee-survey-list/(?P<session_pk>\d+)',
+            TuteeListCourseSurveysView.as_view(),
+            name='tutee_course_survey_list'
+        ),
+        url(
+            r'tutee-survey-status/(?P<session_pk>\d+)',
+            SurveyStatusListView.as_view(),
+            name='survey_status_list'
+        ),
+        url(
+            r'survey-success/',
+            SuccessView.as_view(),
+            name='success_survey'
+        ),
+]

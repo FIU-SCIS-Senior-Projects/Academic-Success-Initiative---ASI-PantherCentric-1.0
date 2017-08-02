@@ -1,0 +1,14 @@
+{% extends "_layouts/base.html" %}
+{% block title %}Ambassador Surveys Submitted | {{ block.super }} {% endblock %}
+{% block headline %} <h1> Ambassador Surveys Submitted </h1> {% endblock %}
+
+{% block content %}
+	<div>
+		<p>
+			Survey Successfully Submitted
+		</p>
+                <a href="{% url 'home' %}">Go back home.</a>
+
+	</div>
+{% endblock %}
+

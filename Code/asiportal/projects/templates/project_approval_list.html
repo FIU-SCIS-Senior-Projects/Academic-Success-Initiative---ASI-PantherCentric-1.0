@@ -1,0 +1,58 @@
+{% extends "_layouts/base.html" %}
+{% block title %}Ambassador Project Approval List | {{ block.super }} {% endblock %}
+{% block headline %} <h1> Project TimeSheet Entries </h1> {% endblock %}
+
+{% block content %}
+	<div>
+  		<form method="POST" action="" class="table-responsive">
+			{% csrf_token %}
+			{{ form.management_form }}
+			{{ form.non_form_errors }}
+    		<table class="table">
+				<tr>
+					<th>Ambassador</th>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Total Time</th>
+					<th>Start Time</th>
+					<th>End Time</th>
+					<th>Day</th>
+					<th>Approval</th>
+				</tr>
+  				{% for entry in form %}
+				<tr>
+					{{ entry.id }}
+					<td> 
+					{{ entry.instance.project_time_sheet.ambassador.first_name }}
+					{{ entry.instance.project_time_sheet.ambassador.last_name }}
+					</td>
+					<td> 
+					{{ entry.initial.title }}
+					</td>
+					<td> 
+					{{ entry.initial.description }}
+					</td>
+					<td> 
+					{{ entry.initial.total_time }}
+					</td>
+					<td> 
+					{{ entry.initial.start_time }}
+					</td>
+					<td> 
+					{{ entry.initial.end_time }}
+					</td>
+					<td> 
+					{{ entry.initial.day }}
+					</td>
+					<td> 
+					{{ entry.project_leader_verification }}
+					</td>
+				</tr>
+  					{% empty %}
+  					<td class="list-group-item">You have no entries to approve</li>
+				{% endfor %}
+  			</table>
+			<input type="submit" value="Approve" class="submit" />
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+	<h1>Tutee Survey</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="POST">
+		{{ form.as_p }}
+		{% csrf_token %}
+		<button value="submit" type="submit">
+			Click here
+		</button>
+	</form>
+{% endblock %}

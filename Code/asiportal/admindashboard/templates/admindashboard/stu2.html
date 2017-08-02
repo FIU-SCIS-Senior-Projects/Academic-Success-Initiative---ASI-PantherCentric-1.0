@@ -1,0 +1,52 @@
+{% extends '_layouts/base.html' %}
+
+{% block title %}
+  {{ block.super }} | Student Details
+{% endblock %}
+
+{% block headline %}
+<h1>ASI Portal Admin Dashboard</h1>
+{% endblock %}
+
+{% block content %}
+<!--So if logged in goes in this block-->
+  {% if request.user.is_authenticated %}
+  <div class="home-wrapper">
+      <p>Student Profile<br></p>
+  </div>
+    <div>
+		<!--if your Myriam-->
+        {% if is_project_lead and not request.user.is_superuser %}
+
+		<div><h1>PROJECT LEAD AND NOT SUPER USER<h1></div>
+		
+		<!--else your any other group-->
+		<!-- display the students details  -->
+        {% else %}
+			<div class="text-left">
+			<br>
+			<h2 class="text-left"> Name: <span class="text-info">{{ object.get_full_name }}</span></h2>
+			<br>
+      <h3> Courses: <span class="text-info row">
+          <ul class="list-group col-xs-6">{% for course in courses  %} 
+            <li class="list-group-item">
+          <a href="{% url 'admin_dashboard:surveys_by_course' username=object.username course_slug=course.slug %}">
+            {{course }} </a></li>
+          {% endfor %}
+          </ul>
+        </span></h3>
+			<h3> Major: <span class="text-info"> {{ object.profile.major}}</span></h3>
+			<h3> Sex: <span class="text-info"> {{ object.profile.sex}}</span></h3>
+			<h3> Phone: <span class="text-info"> {{ object.profile.phone_number }}</span></h3>
+			<h3> Email: <span class="text-info"> {{ object.email}}</span></h3>
+			
+			
+			</div>
+		{% endif %}
+    </div>
+		
+	<!--if not logged in you get this-->
+	{% else %}
+	<p>Please log in to continue.</p>
+	{% endif %}
+{% endblock %}

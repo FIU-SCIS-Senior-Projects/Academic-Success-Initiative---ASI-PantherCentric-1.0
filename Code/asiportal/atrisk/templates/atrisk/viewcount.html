@@ -1,0 +1,26 @@
+{% extends '_layouts/base.html' %}
+{% block title %}
+{{ block.super }} | Video Views
+{% endblock %}
+
+{% block headline %}
+<h1>Total Views for {{ video_title }} video</h1>
+{% endblock %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+        <th>User</th>
+        <th>Total Views</th>
+    </thead>
+<tbody>
+{% for user, view_count in mixpanel.totals.items %}
+<tr>
+    <td>{{ user }}</td>
+    <td>{{ view_count }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

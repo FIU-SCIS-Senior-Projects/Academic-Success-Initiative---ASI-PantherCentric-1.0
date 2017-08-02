@@ -1,0 +1,24 @@
+{% extends "_layouts/base.html" %}
+{% block title %}Ambassador Surveys Submitted | {{ block.super }} {% endblock %}
+{% block headline %} <h1> Survey Status: {{tutee_name}} </h1> {% endblock %}
+
+{% block content %}
+	<div>
+		<div class="sm-col-6">
+    		<ul class="list-group">
+				<div class="ul-head-wrapper">
+					<span>Incompleted Tutee Surveys</span>
+				</div>
+  				{% for survey in view.get_queryset%}
+					<li class="list-group-item"> 
+						{{ survey.individual_session }} 
+					</li>
+					{% empty %}
+  					<li class="list-group-item">
+						Your tutee has done all of their surveys!
+					</li>
+				{% endfor %}
+  			</ul>
+		</div>
+	</div>
+{% endblock %}

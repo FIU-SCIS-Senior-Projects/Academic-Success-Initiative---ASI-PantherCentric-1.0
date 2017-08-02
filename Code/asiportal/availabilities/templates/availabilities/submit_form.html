@@ -1,0 +1,26 @@
+{% extends '_layouts/base.html' %}
+
+{% block headline %}
+    <h1>Submit a new availability</h1>
+{% endblock %}
+
+{% block content %}
+<div class="alert alert-info">
+	Allowed Formats<br>
+	24 Hour time (12:00:00 to 13:00:00)<br>
+	12 Hour Time (12:00 pm to 1:00 pm)<br>
+	Hours can be entered in blocks for example,
+	<br> 2:00 pm to 5:00 pm <br>
+	Valid hours <br>
+	9:00 a.m. - 9:00 p.m. Monday-Thursday<br>
+	9:00 a.m. - 7:00 p.m. Friday <br>
+	Any questions please contact pcord004 on the ASI Slack.
+</div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button value="submit" type="submit">
+            Click here
+        </button>
+    </form>
+{% endblock %}
