@@ -5,7 +5,7 @@ asgiref==1.0.0
 attrs==16.3.0
 autobahn==0.17.2
 Automat==0.5.0
-bleach==2.0.0
+bleach==3.1.2
 cachetools==2.0.0
 channels==1.0.3
 constantly==15.1.0
