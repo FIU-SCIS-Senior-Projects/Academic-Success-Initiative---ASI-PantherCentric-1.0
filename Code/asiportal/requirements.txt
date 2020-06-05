@@ -12,7 +12,7 @@ constantly==15.1.0
 coverage==4.1
 daphne==1.0.3
 decorator==4.0.10
-Django==1.11.2
+Django==1.11.29
 django-analytical==2.2.2
 django-datetime-widget==0.9.3
 django-debug-toolbar==1.6
