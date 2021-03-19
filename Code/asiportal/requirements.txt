@@ -18,7 +18,7 @@ django-datetime-widget==0.9.3
 django-debug-toolbar==1.6
 django-extensions==1.6.7
 django-jenkins==0.110.0
-djangorestframework==3.5.3
+djangorestframework==3.11.2
 docutils==0.13.1
 entrypoints==0.2.3
 et-xmlfile==1.0.1
