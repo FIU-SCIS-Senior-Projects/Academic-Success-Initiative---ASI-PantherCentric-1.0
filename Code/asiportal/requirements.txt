@@ -87,7 +87,7 @@ traitlets==4.2.2
 Twisted==17.1.0
 txaio==2.6.1
 uritemplate==3.0.0
-urllib3==1.20
+urllib3==1.26.5
 wcwidth==0.1.7
 webencodings==0.5.1
 widgetsnbextension==2.0.0
