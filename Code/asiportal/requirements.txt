@@ -61,7 +61,7 @@ pandocfilters==1.4.1
 pbr==1.10.0
 pexpect==4.2.0
 pickleshare==0.7.3
-Pillow==4.0.0
+Pillow==9.0.0
 prompt-toolkit==1.0.3
 psycopg2==2.6.1
 ptyprocess==0.5.1
